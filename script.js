@@ -200,7 +200,7 @@ function cargarPago() {
     var pagado = tickets[ticketSeleccionado].pagado;
     if (pagado) {
         alert("Esta cuenta está pagada. muchas gracias");
-        window.location = "index.html"
+        window.location = "0-index.html";
     }
     var precio = tickets[ticketSeleccionado].total
     var p_total = document.getElementById("p_total")
@@ -218,7 +218,7 @@ function checkPago() {
     var pagado = tikets[ticketSeleccionado].pagado;
     if (pagado) {
         alert("Esta cuenta está pagada. muchas gracias");
-        window.location = "index.html"
+        window.location = "0-index.html";
     }
     if (!nombre.match(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u)) {
         alert("El nombre introducido no es válido.");
@@ -243,7 +243,7 @@ function checkPago() {
     if (!validationCard) { alert("El número de tarjeta introducido no es Visa o Mastercard") }
     if (validation && validationCard) {
         alert("Operación finalizada con éxito.")
-        window.location = "index.html"
+        window.location = "0-index.html";
         pagado = true;
     }
     tikets[ticketSeleccionado].pagado = pagado;
@@ -488,7 +488,15 @@ function cargarMesas(camareroActual, mesas) {
             document.getElementsByClassName("c_cpntainer3")[0].appendChild(divMesa);
         }
     }
-    historial();
+    
+    if(JSON.parse(localStorage.getItem('ticket'))!=null){
+        historial();
+    }else{
+        let historial = document.querySelector('#c_historial');
+        historial.innerHTML = 'No hay tickets'
+    }
+    
+    
 }
 
 //ENVÍA LA MESA A MESA.HTML
@@ -500,7 +508,6 @@ function checkMesa(indice, camareroActual) {
     camareroIn();
     enviaMesa(indice)
 }
-
 
 function enviaMesa(indice) {
     subir('mesaActual', indice);
