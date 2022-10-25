@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Area</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <script src="admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body id="a_body">
+
+    <header id="a_header">
+        <h2 id="a_nombre">Admin Área</h2>
+        <h4><a href="../0-index/index.html">Salir</a></h4>
+    </header>
+    <div id="a_gestion">
+        <h2>Gestión de camareros</h2>
+        <div id="a_tabla">
+            <div class="a_tablaH">
+                <p></p>
+                <p>Nombre</p>
+                <p>Password</p>
+                <p>Mesas</p>
+            </div>
+            <div class="a_tablaR">
+                <p class="a_ids">ID 1: </p>
+                <input type="text" class="userName" placeholder="">
+                <input type="text" class="userPass" placeholder="">
+                <p class="a_rendimiento"> </p>
+            </div>
+            <div class="a_tablaR">
+                <p class="a_ids">ID 2: </p>
+                <input type="text" class="userName" placeholder="">
+                <input type="text" class="userPass" placeholder="">
+                <p class="a_rendimiento"> </p>
+            </div>
+            <div class="a_tablaR">
+                <p class="a_ids">ID 3: </p>
+                <input type="text" class="userName" placeholder="">
+                <input type="text" class="userPass" placeholder="">
+                <p class="a_rendimiento"> </p>
+            </div>
+            <div class="a_tablaR">
+                <p class="a_ids">ID 4: </p>
+                <input type="text" class="userName" placeholder="">
+                <input type="text" class="userPass" placeholder="">
+                <p class="a_rendimiento"> </p>
+            </div>
+        </div>
+        <button id="a_mostrar_datos">Mostrar datos</button>      
+        <button id="a_guardar_cambios">Guardar cambios</button>
+    </div>
+    <div class="a_resultados1">
+    <details>
+        <summary class= "c_style">
+            Resultados
+        </summary>
+        <button class="a_resultados1">Total/mesas</button>
+        <button class="a_resultados1">Total/importes</button>  
+    
+    </details>
+</div>
+    
+    <div id="a_resultados">
+                
+    </div>
+</body>
+</html>
