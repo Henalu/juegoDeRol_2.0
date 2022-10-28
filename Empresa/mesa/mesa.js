@@ -1,16 +1,5 @@
 //Importar
-// import {Ticket} from "../../Clientes/ticket/ticket.js";
-class Ticket {
-    constructor(id_ticket, fecha, id_mesa, nombre_camarero, comanda, total, pagado) {
-        this.id_ticket = id_ticket;
-        this.fecha = fecha;
-        this.id_mesa = id_mesa;
-        this.nombre_camarero = nombre_camarero;
-        this.comanda = comanda;
-        this.total = total;
-        this.pagado = pagado;
-    }
-}
+import {Ticket} from "../../Clientes/ticket/ticket.js";
 
 function borrarChild(parent) {
     while (parent.firstChild) {

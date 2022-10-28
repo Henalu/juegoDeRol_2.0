@@ -1,5 +1,6 @@
 //TICKET
-class Ticket {
+
+export class Ticket{
     constructor(id_ticket, fecha, id_mesa, nombre_camarero, comanda, total, pagado) {
         this.id_ticket = id_ticket;
         this.fecha = fecha;
@@ -9,19 +10,7 @@ class Ticket {
         this.total = total;
         this.pagado = pagado;
     }
-}
-
-// export class Ticket{
-//     constructor(id_ticket, fecha, id_mesa, nombre_camarero, comanda, total, pagado) {
-//         this.id_ticket = id_ticket;
-//         this.fecha = fecha;
-//         this.id_mesa = id_mesa;
-//         this.nombre_camarero = nombre_camarero;
-//         this.comanda = comanda;
-//         this.total = total;
-//         this.pagado = pagado;
-//     }
-// };
+};
 
 // Funcion para que el cliente pueda ver el ticket de su consumicion y pagarlo.
 

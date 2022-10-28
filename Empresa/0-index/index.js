@@ -7,6 +7,82 @@ function bajar(clave) {
 }
 
 //--------------------Inicializamos datos basicos para el restaurante: menu, mesa y camareros-----------------------
+class camarero{
+    constructor(id, nombre, password){
+        this.id = id;
+        this.nombre = nombre;
+        this.password = password;
+
+        this.mesasActuales = [];
+        this.mesasAtendidas = 0;
+    }
+    actualizarMesasActuales(mesa){
+        this.mesasActuales.push(mesa);
+    }
+    añadirMesasAtendidas(){
+        this.mesasActuales += 1;
+    }
+    finDeMes(){
+        this.mesasActuales = 0;
+    }
+}
+
+const camarero1 = new camarero(1, 'Sebas', 1234);
+const camarero2 = new camarero(2, 'Ambar', 1234);
+console.log(camarero1);
+
+const listaCamarerosClass = [];
+listaCamarerosClass.push(camarero1, camarero2);
+console.log(listaCamarerosClass);
+
+class mesa{
+    constructor(numero){
+        this.numero = numero;
+
+        this.estado = '';
+        this.idCamarero = 0;
+        this.comanda = [];
+    }
+}
+
+const listaMesasClass = [];
+
+
+class articulo {
+    constructor(nombre, precio) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.descripciones = [];
+    }
+    añadirDescripcion(descripcion) {
+        this.descripciones.push(descripcion);
+    }
+    borrarDescripcion(descripcion) {
+        this.descripciones.pop(descripcion);
+    }
+}
+
+class menu{
+    constructor(titulo){
+        this.titulo = titulo;
+        this.articulosMenu = [];
+    }
+
+    añadirArticulos(articulo){
+        this.articulosMenu.push(articulo);
+    }
+}
+
+const tartaDeQueso = new articulo('Tarta de Queso', 4.99);
+const flan = new articulo('Flan', 3.99);
+tartaDeQueso.añadirDescripcion('Una deliciosa tarta de queso casera');
+console.log(tartaDeQueso);
+
+const menuPostres = new menu ('Menu de Postres');
+menuPostres.añadirArticulos(tartaDeQueso);
+menuPostres.añadirArticulos(flan);
+console.log(menuPostres);
+
 function iniciar() {
     if (localStorage.length == 0) {
         var listaCamareros = [];
@@ -73,7 +149,7 @@ window.addEventListener('load', () => {
     iniciar();
 
     var i_iniciar_sesion = document.querySelector('#i_iniciar_sesion');
-    i_iniciar_sesion.addEventListener('click', ()=>{
+    i_iniciar_sesion.addEventListener('click', () => {
         iniciarSesion();
     });
 
