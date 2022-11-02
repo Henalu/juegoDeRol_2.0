@@ -11,26 +11,27 @@ function borrarChild(parent) {
     }
 }
 
-import {consulta_ticket} from "../../Clientes/ticket/ticket.js";
-// import { Ticket } from "../../Clientes/ticket/ticket.js";
-class Ticket {
-    constructor(id_ticket, fecha, id_mesa, nombre_camarero, comanda, total, pagado) {
-        this.id_ticket = id_ticket;
-        this.fecha = fecha;
-        this.id_mesa = id_mesa;
-        this.nombre_camarero = nombre_camarero;
-        this.comanda = comanda;
-        this.total = total;
-        this.pagado = pagado;
-    }
-}
+import { consulta_ticket } from "../../Clientes/ticket/ticket.js";
+import { Ticket } from "../../Clientes/ticket/ticket.js";
+// class Ticket {
+//     constructor(id_ticket, fecha, id_mesa, nombre_camarero, comanda, total, pagado) {
+//         this.id_ticket = id_ticket;
+//         this.fecha = fecha;
+//         this.id_mesa = id_mesa;
+//         this.nombre_camarero = nombre_camarero;
+//         this.comanda = comanda;
+//         this.total = total;
+//         this.pagado = pagado;
+//     }
+// }
 
 //Baja datos de las mesas y camarero logueado - llama a la función que carga la info
 function camareroIn() {
-    var camareros = JSON.parse(bajar('camarero'));
-    var camareroActual = parseInt(localStorage.getItem('camareroActual'));
-    var mesas = JSON.parse(bajar('mesa'));
-    document.getElementById('c_nombre').innerText = camareros[(camareroActual - 1)].nombre_camarero
+    let camareros = JSON.parse(localStorage.listaCamareros);
+    let arrayCamareros = Object.values(camareros);
+    var camareroActual = JSON.parse(localStorage.getItem('camareroActual'));
+    var mesas = JSON.parse(localStorage.listaMesas);
+    document.getElementById('c_nombre').innerHTML = camareroActual.toUpperCase();
     cargarMesas(camareroActual, mesas);
 }
 
@@ -47,9 +48,9 @@ function borraMesas() {
 function cargarMesas(camareroActual, mesas) {
     //BORRA MESAS ANTERIORES PARA ACTUALIZAR
     borraMesas();
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < mesas.length; i++) {
         //FILTRA MESAS ABIERTAS DEL CAMARERO Y LAS PINTA
-        if (mesas[i].estado == 'abierta' && mesas[i].id_camarero == camareroActual) {
+        if (mesas[i].estado == 'abierta' && mesas[i].nombreCamarero == camareroActual) {
             var divMesa = document.createElement('button');
             divMesa.className = `c_mesasA`;
             divMesa.addEventListener('click', () => { enviaMesa(i); })
@@ -62,14 +63,20 @@ function cargarMesas(camareroActual, mesas) {
         if (mesas[i].estado == 'cerrada') {
             var divMesa = document.createElement('button');
             divMesa.className = `c_mesasC`;
-            divMesa.addEventListener('click', () => { checkMesa(i, camareroActual); })
+            divMesa.addEventListener('click', () => {
+                checkMesa(i, camareroActual);
+
+                var listaCamareros = JSON.parse(localStorage.getItem('listaCamareros'));
+                listaCamareros[camareroActual].mesasActuales.push(mesas[i].numero);
+                localStorage.setItem('listaCamareros', JSON.stringify(listaCamareros))
+            })
             var numero = document.createTextNode((mesas[i].numero));
             divMesa.appendChild(numero);
             document.querySelector('.c_cpntainer2').appendChild(divMesa);
         }
 
         //FILTRA MESAS ABIERTAS DE OTROS CAMAREROS Y LAS PINTA
-        if (mesas[i].estado == 'abierta' && mesas[i].id_camarero != camareroActual) {
+        if (mesas[i].estado == 'abierta' && mesas[i].nombreCamarero != camareroActual) {
             var divMesa = document.createElement('button');
             divMesa.className = `c_mesasR`;
             var numero = document.createTextNode(mesas[i].numero);
@@ -77,10 +84,10 @@ function cargarMesas(camareroActual, mesas) {
             document.getElementsByClassName("c_cpntainer3")[0].appendChild(divMesa);
         }
     }
-    
-    if(JSON.parse(localStorage.getItem('ticket'))!=null){
+
+    if (JSON.parse(localStorage.getItem('ticket')) != null) {
         historial();
-    }else{
+    } else {
         let historial = document.querySelector('#c_historial');
         historial.innerHTML = 'No hay tickets';
     }
@@ -88,10 +95,11 @@ function cargarMesas(camareroActual, mesas) {
 
 //ENVÍA LA MESA A MESA.HTML
 function checkMesa(indice, camareroActual) {
-    var mesasArriba = JSON.parse(bajar('mesa'));
-    mesasArriba[indice].estado = 'abierta';
-    mesasArriba[indice].id_camarero = camareroActual;
-    subir('mesa', JSON.stringify(mesasArriba));
+    var mesas = JSON.parse(localStorage.listaMesas);
+    mesas[indice].estado = 'abierta';
+    mesas[indice].nombreCamarero = camareroActual;
+
+    subir('listaMesas', JSON.stringify(mesas));
     camareroIn();
     enviaMesa(indice)
 }
@@ -102,11 +110,11 @@ function enviaMesa(indice) {
 }
 function historial() {
     var tickets = JSON.parse(localStorage.ticket);
-    var camareros = JSON.parse(bajar('camarero'));
-    var camareroActual = parseInt(localStorage.getItem("camareroActual"))
+    var camareros = JSON.parse(localStorage.getItem('listaCamareros'));
+    var camareroActual = JSON.parse(localStorage.getItem("camareroActual"));
 
     for (let i = 0; i < tickets.length; i++) {
-        if (tickets[i].nombre_camarero == camareros[camareroActual - 1].nombre_camarero) {
+        if (tickets[i].nombre_camarero == camareros[camareroActual].nombre) {
             var idTicket = tickets[i].id_ticket
             var botonTicket = document.createElement('button');
             botonTicket.className = `c_ticket`;
@@ -117,11 +125,10 @@ function historial() {
             var id = document.createTextNode(`Fecha: ${tickets[i].fecha} | id: ${idTicket}`);
             botonTicket.appendChild(id);
             document.querySelector('#c_historial').appendChild(botonTicket);
-
         }
     }
 }
 
-window.addEventListener('load', ()=>{
+window.addEventListener('load', () => {
     camareroIn();
 });

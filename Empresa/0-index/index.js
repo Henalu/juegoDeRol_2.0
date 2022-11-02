@@ -7,54 +7,68 @@ function bajar(clave) {
 }
 
 //--------------------Inicializamos datos basicos para el restaurante: menu, mesa y camareros-----------------------
-class camarero{
-    constructor(id, nombre, password){
-        this.id = id;
+export class usuario {
+    constructor(nombre, password) {
         this.nombre = nombre;
         this.password = password;
+    }
+
+    login(nombre, password) {
+        return this.nombre == nombre && this.password == password;
+    }
+}
+
+export class camarero extends usuario {
+    constructor(nombre, password) {
+        super(nombre, password);
+        // this.id = id;
 
         this.mesasActuales = [];
         this.mesasAtendidas = 0;
     }
-    actualizarMesasActuales(mesa){
+    actualizarMesasActuales(mesa) {
         this.mesasActuales.push(mesa);
     }
-    añadirMesasAtendidas(){
+    añadirMesasAtendidas() {
         this.mesasActuales += 1;
     }
-    finDeMes(){
+    finDeMes() {
         this.mesasActuales = 0;
     }
 }
 
-const camarero1 = new camarero(1, 'Sebas', 1234);
-const camarero2 = new camarero(2, 'Ambar', 1234);
-console.log(camarero1);
-
-const listaCamarerosClass = [];
-listaCamarerosClass.push(camarero1, camarero2);
-console.log(listaCamarerosClass);
-
-class mesa{
-    constructor(numero){
-        this.numero = numero;
-
-        this.estado = '';
-        this.idCamarero = 0;
-        this.comanda = [];
+export class admin extends usuario {
+    constructor(nombre, password) {
+        super(nombre, password);
+        // this.id = id;
     }
 }
 
-const listaMesasClass = [];
+export class mesa {
+    constructor(numero) {
+        this.numero = numero;
 
+        this.estado = 'cerrada';
+        this.nombreCamarero = '';
+        this.comanda = [];
+    }
 
-class articulo {
+    addComanda(...articulos){
+        articulos.forEach(element =>{
+            this.comanda.push(element);
+        })
+    }
+}
+
+export class articulo {
     constructor(nombre, precio) {
         this.nombre = nombre;
         this.precio = precio;
+
+        this.cantidad = 0;
         this.descripciones = [];
     }
-    añadirDescripcion(descripcion) {
+    addDescripcion(descripcion) {
         this.descripciones.push(descripcion);
     }
     borrarDescripcion(descripcion) {
@@ -62,62 +76,17 @@ class articulo {
     }
 }
 
-class menu{
-    constructor(titulo){
+export class menu {
+    constructor(titulo) {
         this.titulo = titulo;
         this.articulosMenu = [];
     }
 
-    añadirArticulos(articulo){
-        this.articulosMenu.push(articulo);
-    }
-}
+    addArticulos(...articulo) {
+        articulo.forEach(element => {
+            this.articulosMenu.push(element);
+        });
 
-const tartaDeQueso = new articulo('Tarta de Queso', 4.99);
-const flan = new articulo('Flan', 3.99);
-tartaDeQueso.añadirDescripcion('Una deliciosa tarta de queso casera');
-console.log(tartaDeQueso);
-
-const menuPostres = new menu ('Menu de Postres');
-menuPostres.añadirArticulos(tartaDeQueso);
-menuPostres.añadirArticulos(flan);
-console.log(menuPostres);
-
-function iniciar() {
-    if (localStorage.length == 0) {
-        var listaCamareros = [];
-        for (let i = 1; i < 5; i++) {
-            var camarero = {
-                id_camarero: `${i}`,
-                nombre_camarero: `camarero${i}`,
-                password: "1234",
-                mesasActuales: {},
-                mesasAtendidas: 0
-            }
-            listaCamareros.push(camarero);
-        }
-        subir("camarero", JSON.stringify(listaCamareros))
-
-        var listaMesas = [];
-        for (let i = 1; i < 11; i++) {
-
-            var mesa = {
-                numero: `${i}`,
-                estado: 'cerrada',
-                id_camarero: 0,
-                comanda: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            }
-            listaMesas.push(mesa);
-        }
-
-        subir("mesa", JSON.stringify(listaMesas));
-
-        var menu = {
-            "id_articulo": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-            'nombre': ['Vino tinto', 'Vino blanco', 'Cerveza', 'Refresco', 'Zumo', 'Café', 'Café especial', 'Gazpacho', 'Ensalada mixta', 'Ensaladilla', 'Lasaña', 'Puré de verduras', 'Secreto ibérico', 'Escalope de pollo', 'Bacalao a la riojana', 'Hamburguesa', 'Tarta de queso', 'Fruta del tiempo', 'Flan de la casa', 'Tarta de la abuela', 'Varios'],
-            'precio': [2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5]
-        }
-        subir('menu', JSON.stringify(menu));
     }
 }
 
@@ -125,30 +94,116 @@ function iniciar() {
 function iniciarSesion() {
     let loginUser = document.getElementById("a_nombre").value;
     let loginPass = document.getElementById("password").value;
-    let users = JSON.parse(localStorage.camarero);
-    let username = users.map(element => element.nombre_camarero);
-    let password = users.map(element => element.password);
-    let id_camarero = users.map(element => element.id_camarero);
-    if (loginUser == "admin" && loginPass == "nimda") {
+
+    let camareros = JSON.parse(localStorage.listaCamareros);
+    let entriesCamareros = Object.entries(camareros);
+    let arrayCamareros = [];
+    let arrayPasswords = [];
+
+    if (loginUser == "admin" && loginPass == "1234") {
         window.location = "../admin/admin.html"
     }
     else {
-        loginok = false
-        for (let i = 0; i < username.length; i++) {
-            if (loginUser == username[i] && loginPass == password[i]) {
+        entriesCamareros.forEach(element => {
+            arrayCamareros.push(element[1].nombre);
+        });
+        entriesCamareros.forEach(element => {
+            arrayPasswords.push(element[1].password);
+        });
+
+        let login = false;
+
+        for (let i = 0; i < arrayCamareros.length; i++) {
+            if (loginUser == arrayCamareros[i] && loginPass == arrayPasswords[i]) {
                 window.location = "../camarero/camarero.html";
-                localStorage.setItem("camareroActual", id_camarero[i]);
-                loginok = true
+                localStorage.setItem("camareroActual", JSON.stringify(arrayCamareros[i]));
+                login = true;
             }
         }
-        if (!loginok) { alert("Usuario y/o contraseña incorrecta") }
+        if(!login){
+            alert("Usuario y/o contraseña incorrecta");
+        }
     }
 }
 
 window.addEventListener('load', () => {
-    iniciar();
+    if(localStorage.camareroActual){
+        localStorage.setItem("camareroActual", 0);
+    }
+    
+    if (localStorage.length == 0) {
+        const admin1 = new admin('admin', 1234);
+        localStorage.setItem('admin', JSON.stringify(admin1));
 
-    var i_iniciar_sesion = document.querySelector('#i_iniciar_sesion');
+        const camarero1 = new camarero('camarero1', 1234);
+        const camarero2 = new camarero('camarero2', 1234);
+        const camarero3 = new camarero('camarero3', 1234);
+        const camarero4 = new camarero('camarero4', 1234);
+
+        const listaCamareros = { camarero1, camarero2, camarero3, camarero4 };
+        localStorage.setItem('listaCamareros', JSON.stringify(listaCamareros));
+
+        //Articulos del Menu
+        const vinoTinto = new articulo('Vino tinto', 1.50);
+        const vinoBlanco = new articulo('Vino blanco', 1.50);
+        const cerveza = new articulo('cerveza', 1.50);
+        const refresco = new articulo('refresco', 1.50);
+        const zumo = new articulo('zumo', 1.50);
+
+        const cafe = new articulo('cafe', 1);
+        const cafeEspecial = new articulo('cafe Especial', 1.5);
+
+        const gazpacho = new articulo('gazpacho', 5.2);
+        const ensaladaMixta = new articulo('ensalada Mixta', 4.5);
+        const ensaladilla = new articulo('ensaladilla', 5.5);
+        const lasania = new articulo('lasaña', 6.3);
+        const pureVerduras = new articulo('pure de verduras', 5.6);
+
+        const secretoIberico = new articulo('secreto iberico', 10.5);
+        const escalopePollo = new articulo('escalope pollo', 9.5);
+        const bacalaoRiojana = new articulo('bacalao riojana', 12.5);
+        const hamburguesa = new articulo('hamburguesa', 8.9);
+
+        const tartaQueso = new articulo('tarta de queso', 2.99);
+        const frutaTiempo = new articulo('fruta del tiempo', 1.6);
+        const flan = new articulo('Flan', 3.99);
+
+        tartaQueso.addDescripcion('Una deliciosa tarta de queso casera');
+
+        //Mesas
+        const listaMesas = [];
+        let mesaI = 'mesa';
+        for (let i = 1; i < 11; i++) {
+            mesaI = new mesa(i);
+            mesaI.addComanda(vinoTinto, vinoBlanco, cerveza, refresco, zumo, cafe, cafeEspecial, gazpacho, ensaladaMixta, ensaladilla, lasania, pureVerduras, secretoIberico, escalopePollo, bacalaoRiojana, hamburguesa, tartaQueso, frutaTiempo, flan);
+            
+            listaMesas.push(mesaI);
+        }
+        localStorage.setItem('listaMesas', JSON.stringify(listaMesas));
+
+        //Menus:
+        const primeros = new menu('Primeros');
+        primeros.addArticulos(gazpacho, ensaladaMixta, ensaladilla, lasania, pureVerduras);
+        // localStorage.setItem('primeros', JSON.stringify(primeros));
+
+        const segundos = new menu('Segundos');
+        segundos.addArticulos(secretoIberico, escalopePollo, bacalaoRiojana, hamburguesa);
+        // localStorage.setItem('segundos', JSON.stringify(segundos));
+
+        const bebidas = new menu('Bebidas');
+        bebidas.addArticulos(vinoTinto, vinoBlanco, cerveza, refresco, zumo, cafe, cafeEspecial);
+        // localStorage.setItem('bebidas', JSON.stringify(bebidas));
+
+        const postres = new menu('Postres');
+        postres.addArticulos(tartaQueso, frutaTiempo, flan);
+        // localStorage.setItem('postres', JSON.stringify(postres));
+
+        const menus = { primeros, segundos, bebidas, postres }
+        localStorage.setItem('Menus', JSON.stringify(menus));
+        
+    }//Fin IF
+
+    var i_iniciar_sesion = document.querySelector('button#i_iniciar_sesion');
     i_iniciar_sesion.addEventListener('click', () => {
         iniciarSesion();
     });

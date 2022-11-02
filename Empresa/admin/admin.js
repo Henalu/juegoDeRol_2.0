@@ -7,75 +7,83 @@ function bajar(clave) {
 }
 
 function mostrarDatos() {
-    let users = JSON.parse(localStorage.camarero);
-    let rendimiento = document.getElementsByClassName("a_rendimiento")
-    let username = users.map(element => element.nombre_camarero);
-    let password = users.map(element => element.password);
+    let camareros = JSON.parse(localStorage.listaCamareros);
+    console.log(camareros);
+    let entriesCamareros = Object.entries(camareros);
+    console.log(entriesCamareros);
+    let nombresCamareros = [];
+    let passwordCamareros = [];
+    entriesCamareros.forEach(element => {
+        nombresCamareros.push(element[1].nombre)
+    });
+    console.log(nombresCamareros);
+    entriesCamareros.forEach(element => {
+        passwordCamareros.push(element[1].password)
+    });
+    console.log(passwordCamareros);
+
+    let rendimiento = document.querySelectorAll(".a_rendimiento");
+
     var placeholders_name = document.getElementsByClassName("userName");
     var placeholders_pass = document.getElementsByClassName("userPass");
-    var mesas = JSON.parse(localStorage.mesa)
-
-    var mesasAtendidas1 = []
-    for (let i = 0; i < 10; i++) {
-        if (mesas[i].estado == 'abierta' && mesas[i].id_camarero == 1) {
-            mesasAtendidas1.push(mesas[i].numero)
-        }
-    }
-    var mesasAtendidas2 = []
-    for (let i = 0; i < 10; i++) {
-        if (mesas[i].estado == 'abierta' && mesas[i].id_camarero == 2) {
-            mesasAtendidas2.push(mesas[i].numero)
-        }
-    }
-    var mesasAtendidas3 = []
-    for (let i = 0; i < 10; i++) {
-        if (mesas[i].estado == 'abierta' && mesas[i].id_camarero == 3) {
-            mesasAtendidas3.push(mesas[i].numero)
-        }
-    }
-    var mesasAtendidas4 = []
-    for (let i = 0; i < 10; i++) {
-        if (mesas[i].estado == 'abierta' && mesas[i].id_camarero == 4) {
-            mesasAtendidas4.push(mesas[i].numero)
-        }
-    }
-
     for (let i = 0; i < placeholders_name.length; i++) {
-        placeholders_name[i].value = username[i];
-        placeholders_pass[i].value = password[i];
-
+        placeholders_name[i].value = nombresCamareros[i];
+        placeholders_pass[i].value = passwordCamareros[i];
     }
-    rendimiento[0].innerHTML = mesasAtendidas1;
-    rendimiento[1].innerHTML = mesasAtendidas2;
-    rendimiento[2].innerHTML = mesasAtendidas3;
-    rendimiento[3].innerHTML = mesasAtendidas4;
+
+    var mesas = JSON.parse(localStorage.listaMesas);
+    console.log(mesas);
+
+    for (let i = 0; i < 10; i++) {
+        if (mesas[i].estado == 'abierta' && mesas[i].nombreCamarero == nombresCamareros[0]) {
+            rendimiento[0].innerHTML = (mesas[i].numero)
+        }
+    }
+    for (let i = 0; i < 10; i++) {
+        if (mesas[i].estado == 'abierta' && mesas[i].nombreCamarero == nombresCamareros[1]) {
+            rendimiento[1].innerHTML = (mesas[i].numero)
+        }
+    }
+    for (let i = 0; i < 10; i++) {
+        if (mesas[i].estado == 'abierta' && mesas[i].nombreCamarero == nombresCamareros[2]) {
+            rendimiento[2].innerHTML = (mesas[i].numero)
+        }
+    }
+    for (let i = 0; i < 10; i++) {
+        if (mesas[i].estado == 'abierta' && mesas[i].nombreCamarero == nombresCamareros[3]) {
+            rendimiento[3].innerHTML = (mesas[i].numero)
+        }
+    }
 }
+
 function guardarCambios() {
     var placeholders_name = document.getElementsByClassName("userName");
     var placeholders_pass = document.getElementsByClassName("userPass");
     var names = [];
     var pass = [];
-    let users = JSON.parse(localStorage.camarero);
+    let camareros = JSON.parse(localStorage.listaCamareros);
+    let arrayCamareros = Object.values (camareros);
+    console.log(arrayCamareros);
     for (let i = 0; i < placeholders_name.length; i++) {
         names.push(placeholders_name[i].value);
         pass.push(placeholders_pass[i].value);
     };
 
     for (let k = 0; k < placeholders_name.length; k++) {
-        users[k].nombre_camarero = names[k];
-        users[k].password = pass[k];
+        arrayCamareros[k].nombre = names[k];
+        arrayCamareros[k].password = pass[k];
     };
 
-    localStorage.setItem("camarero", JSON.stringify(users))
+    localStorage.setItem("listaCamareros", JSON.stringify(arrayCamareros))
 }
 
 //---------------------------------------- GRAFICA RESULTADOS -------------------------------------------------------------------------------------
 function cargarGraficos(num) {
-
     // DATOS -------------
 
     var tickets = JSON.parse(bajar('ticket'))
-    var camareros = JSON.parse(bajar('camarero'))
+    let camareros = JSON.parse(localStorage.listaCamareros);
+    let arrayCamareros = Object.values (camareros);
     var total = [0]
     var total1 = [0]
     var total2 = [0]
@@ -86,24 +94,24 @@ function cargarGraficos(num) {
     if (tickets != null) {
         for (let i = 0; i < tickets.length; i++) {
             total.push(tickets[i].total)
-            if (tickets[i].nombre_camarero == camareros[0].nombre_camarero) {
+            if (tickets[i].nombre_camarero == arrayCamareros[0].nombre) {
                 total1.push(tickets[i].total)
             }
-            if (tickets[i].nombre_camarero == camareros[1].nombre_camarero) {
+            if (tickets[i].nombre_camarero == arrayCamareros[1].nombre) {
                 total2.push(tickets[i].total)
             }
-            if (tickets[i].nombre_camarero == camareros[2].nombre_camarero) {
+            if (tickets[i].nombre_camarero == arrayCamareros[2].nombre) {
                 total3.push(tickets[i].total)
             }
-            if (tickets[i].nombre_camarero == camareros[3].nombre_camarero) {
+            if (tickets[i].nombre_camarero == arrayCamareros[3].nombre) {
                 total4.push(tickets[i].total)
             }
         }
-        mesas = total.length - 1
-        mesas1 = total1.length - 1
-        mesas2 = total2.length - 1
-        mesas3 = total3.length - 1
-        mesas4 = total4.length - 1
+        mesas = total.length - 1;
+        mesas1 = total1.length - 1;
+        mesas2 = total2.length - 1;
+        mesas3 = total3.length - 1;
+        mesas4 = total4.length - 1;
         sTotal = total.reduce(function (a, b) { return a + b });
         sTotal1 = total1.reduce(function (a, b) { return a + b });
         sTotal2 = total2.reduce(function (a, b) { return a + b });
@@ -115,18 +123,18 @@ function cargarGraficos(num) {
     /*---- Config graficas ----*/
     const labels = [
         'total',
-        camareros[0].nombre_camarero,
-        camareros[1].nombre_camarero,
-        camareros[2].nombre_camarero,
-        camareros[3].nombre_camarero
+        arrayCamareros[0].nombre,
+        arrayCamareros[1].nombre,
+        arrayCamareros[2].nombre,
+        arrayCamareros[3].nombre
     ];
     const DATA_COUNT = 4;
     const data = {
         labels: labels,
         datasets: [{
             label: 'Mesas servidas',
-            backgroundColor: 'blcak',
-            borderColor: 'blcak',
+            backgroundColor: 'black',
+            borderColor: 'black',
             data: [mesas, mesas1, mesas2, mesas3, mesas4]
         }]
     };
@@ -139,10 +147,10 @@ function cargarGraficos(num) {
 
     const labels1 = [
         'total',
-        camareros[0].nombre_camarero,
-        camareros[1].nombre_camarero,
-        camareros[2].nombre_camarero,
-        camareros[3].nombre_camarero
+        arrayCamareros[0].nombre,
+        arrayCamareros[1].nombre,
+        arrayCamareros[2].nombre,
+        arrayCamareros[3].nombre
     ];
     const DATA_COUNT1 = 5;
     const data1 = {
@@ -188,7 +196,7 @@ function cargarGraficos(num) {
 }
 
 window.addEventListener('load', () => {
-    cargarGraficos();
+    // cargarGraficos();
 
     var a_mostrar_datos = document.querySelector('#a_mostrar_datos');
     a_mostrar_datos.addEventListener('click', ()=>{
