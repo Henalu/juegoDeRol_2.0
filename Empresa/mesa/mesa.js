@@ -187,35 +187,23 @@ function cerrarMesa(mesas, mesaActual, camareroActual) {
     });
 
     var camareroActual = localStorage.getItem("camareroActual")
-    var camareroActualN = "";
-    switch (camareroActual) {
-        case "1": camareroActualN = nombresCamareros[0]
-            break;
-        case "2": camareroActualN = nombresCamareros[1]
-            break;
-        case "3": camareroActualN = nombresCamareros[2]
-            break;
-        case "4": camareroActualN = nombresCamareros[3]
-            break;
-    }
 
     var total = 0;
-    console.log(mesas[mesaActual].comanda.length);
     var pagado = false;
     var ticketsLista = JSON.parse(localStorage.getItem("ticket"));
     var inicioTicket = [];
     for (let i = 0; i < mesas[mesaActual-1].comanda.length; i++) {
-        total += mesas[mesaActual-1].comanda[i].cantidad * mesas[mesaActual].comanda[i].precio;
+        total += mesas[mesaActual-1].comanda[i].cantidad * mesas[mesaActual-1].comanda[i].precio;
         console.log(mesas[mesaActual-1].comanda[i].cantidad);
         console.log(mesas[mesaActual-1].comanda[i].precio);
     }
     if (!ticketsLista) {
-        var newTicket = new Ticket(0, fechaticket, mesaActual, JSON.parse(camareroActual), mesas[mesaActual].comanda, total, pagado);
+        var newTicket = new Ticket(0, fechaticket, mesaActual, JSON.parse(camareroActual), mesas[mesaActual-1].comanda, total, pagado);
         inicioTicket.push(newTicket);
         localStorage.setItem("ticket", JSON.stringify(inicioTicket))
     } else {
         var id_anterior = ticketsLista[ticketsLista.length - 1].id_ticket + 1;
-        var newTicket = new Ticket(id_anterior, fechaticket, mesaActual, JSON.parse(camareroActual), mesas[mesaActual].comanda, total, pagado);
+        var newTicket = new Ticket(id_anterior, fechaticket, mesaActual, JSON.parse(camareroActual), mesas[mesaActual-1].comanda, total, pagado);
         ticketsLista.push(newTicket);
         localStorage.setItem("ticket", JSON.stringify(ticketsLista))
     }
@@ -260,4 +248,13 @@ window.addEventListener('load', () => {
             desplegar(desplegables[i]);
         });
     }
+
+    //Opcion de borrar elementos
+    var articulosComanda = document.querySelectorAll('.articuloComanda');
+    articulosComanda.forEach(element=>{
+        element.addEventListener('click', ()=>{
+            console.log(element);
+        });
+    })
+
 });//Fin load

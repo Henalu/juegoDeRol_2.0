@@ -53,8 +53,8 @@ export class mesa {
         this.comanda = [];
     }
 
-    addComanda(...articulos){
-        articulos.forEach(element =>{
+    addComanda(...articulos) {
+        articulos.forEach(element => {
             this.comanda.push(element);
         })
     }
@@ -90,6 +90,31 @@ export class menu {
     }
 }
 
+//Articulos Menu
+export const vinoTinto = new articulo('Vino tinto', 1.50);
+export const vinoBlanco = new articulo('Vino blanco', 1.50);
+export const cerveza = new articulo('cerveza', 1.50);
+export const refresco = new articulo('refresco', 1.50);
+export const zumo = new articulo('zumo', 1.50);
+
+export const cafe = new articulo('cafe', 1);
+export const cafeEspecial = new articulo('cafe Especial', 1.5);
+
+export const gazpacho = new articulo('gazpacho', 5.2);
+export const ensaladaMixta = new articulo('ensalada Mixta', 4.5);
+export const ensaladilla = new articulo('ensaladilla', 5.5);
+export const lasania = new articulo('lasaña', 6.3);
+export const pureVerduras = new articulo('pure de verduras', 5.6);
+
+export const secretoIberico = new articulo('secreto iberico', 10.5);
+export const escalopePollo = new articulo('escalope pollo', 9.5);
+export const bacalaoRiojana = new articulo('bacalao riojana', 12.5);
+export const hamburguesa = new articulo('hamburguesa', 8.9);
+
+export const tartaQueso = new articulo('tarta de queso', 2.99);
+export const frutaTiempo = new articulo('fruta del tiempo', 1.6);
+export const flan = new articulo('Flan', 3.99);
+
 //Funcion logIn de camareros y admin
 function iniciarSesion() {
     let loginUser = document.getElementById("a_nombre").value;
@@ -120,17 +145,17 @@ function iniciarSesion() {
                 login = true;
             }
         }
-        if(!login){
+        if (!login) {
             alert("Usuario y/o contraseña incorrecta");
         }
     }
 }
 
 window.addEventListener('load', () => {
-    if(localStorage.camareroActual){
+    if (localStorage.camareroActual) {
         localStorage.setItem("camareroActual", 0);
     }
-    
+
     if (localStorage.length == 0) {
         const admin1 = new admin('admin', 1234);
         localStorage.setItem('admin', JSON.stringify(admin1));
@@ -143,31 +168,6 @@ window.addEventListener('load', () => {
         const listaCamareros = { camarero1, camarero2, camarero3, camarero4 };
         localStorage.setItem('listaCamareros', JSON.stringify(listaCamareros));
 
-        //Articulos del Menu
-        const vinoTinto = new articulo('Vino tinto', 1.50);
-        const vinoBlanco = new articulo('Vino blanco', 1.50);
-        const cerveza = new articulo('cerveza', 1.50);
-        const refresco = new articulo('refresco', 1.50);
-        const zumo = new articulo('zumo', 1.50);
-
-        const cafe = new articulo('cafe', 1);
-        const cafeEspecial = new articulo('cafe Especial', 1.5);
-
-        const gazpacho = new articulo('gazpacho', 5.2);
-        const ensaladaMixta = new articulo('ensalada Mixta', 4.5);
-        const ensaladilla = new articulo('ensaladilla', 5.5);
-        const lasania = new articulo('lasaña', 6.3);
-        const pureVerduras = new articulo('pure de verduras', 5.6);
-
-        const secretoIberico = new articulo('secreto iberico', 10.5);
-        const escalopePollo = new articulo('escalope pollo', 9.5);
-        const bacalaoRiojana = new articulo('bacalao riojana', 12.5);
-        const hamburguesa = new articulo('hamburguesa', 8.9);
-
-        const tartaQueso = new articulo('tarta de queso', 2.99);
-        const frutaTiempo = new articulo('fruta del tiempo', 1.6);
-        const flan = new articulo('Flan', 3.99);
-
         tartaQueso.addDescripcion('Una deliciosa tarta de queso casera');
 
         //Mesas
@@ -176,7 +176,7 @@ window.addEventListener('load', () => {
         for (let i = 1; i < 11; i++) {
             mesaI = new mesa(i);
             mesaI.addComanda(vinoTinto, vinoBlanco, cerveza, refresco, zumo, cafe, cafeEspecial, gazpacho, ensaladaMixta, ensaladilla, lasania, pureVerduras, secretoIberico, escalopePollo, bacalaoRiojana, hamburguesa, tartaQueso, frutaTiempo, flan);
-            
+
             listaMesas.push(mesaI);
         }
         localStorage.setItem('listaMesas', JSON.stringify(listaMesas));
@@ -200,10 +200,10 @@ window.addEventListener('load', () => {
 
         const menus = { primeros, segundos, bebidas, postres }
         localStorage.setItem('Menus', JSON.stringify(menus));
-        
+
     }//Fin IF
 
-    var i_iniciar_sesion = document.querySelector('button#i_iniciar_sesion');
+    var i_iniciar_sesion = document.querySelector('#i_iniciar_sesion');
     i_iniciar_sesion.addEventListener('click', () => {
         iniciarSesion();
     });

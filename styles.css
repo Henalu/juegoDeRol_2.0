@@ -80,6 +80,8 @@ header#a_header{
     text-align: center;
     margin-left: 0;
     margin-bottom: 50px;
+    display: flex;
+    flex-flow: column wrap;
 }
 #a_gestion h2{
     margin: 5px 0px
@@ -132,7 +134,6 @@ p.a_rendimiento {
     width: 10%;
 }
 
-
 .a_tablaR input{
     margin: 0 5px;
     width: 30%;
@@ -151,6 +152,24 @@ p.a_rendimiento {
    width: 26vw;
 }
 
+#a_mesas{
+    display: flex;
+    flex-flow: row wrap;
+    align-self: center;
+    width: 80%;
+    justify-content: space-evenly;
+}
+
+.a_mesas{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: gray;
+    width: 40px;
+    height: 40px;
+    color: white;
+    margin: 5px;
+}
 
 
 

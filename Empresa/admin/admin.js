@@ -6,6 +6,15 @@ function bajar(clave) {
     return localStorage.getItem(clave);
 }
 
+import { camarero, menu, mesa } from "../0-index/index.js";
+import { vinoTinto, vinoBlanco, cerveza, refresco, zumo, cafe, cafeEspecial, gazpacho, ensaladaMixta, ensaladilla, lasania, pureVerduras, secretoIberico, escalopePollo, bacalaoRiojana, hamburguesa, tartaQueso, frutaTiempo, flan } from "../0-index/index.js";
+import { borrarChild } from "../camarero/camarero.js";
+
+function borraMesas() {
+    var mesasA = document.querySelector('#a_mesas');
+    borrarChild(mesasA);
+}
+//Datos Camareros
 function mostrarDatos() {
     let camareros = JSON.parse(localStorage.listaCamareros);
     console.log(camareros);
@@ -32,37 +41,31 @@ function mostrarDatos() {
     }
 
     var mesas = JSON.parse(localStorage.listaMesas);
-    console.log(mesas);
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < mesas.length; i++) {
         if (mesas[i].estado == 'abierta' && mesas[i].nombreCamarero == nombresCamareros[0]) {
             rendimiento[0].innerHTML = (mesas[i].numero)
         }
-    }
-    for (let i = 0; i < 10; i++) {
         if (mesas[i].estado == 'abierta' && mesas[i].nombreCamarero == nombresCamareros[1]) {
             rendimiento[1].innerHTML = (mesas[i].numero)
         }
-    }
-    for (let i = 0; i < 10; i++) {
         if (mesas[i].estado == 'abierta' && mesas[i].nombreCamarero == nombresCamareros[2]) {
             rendimiento[2].innerHTML = (mesas[i].numero)
         }
-    }
-    for (let i = 0; i < 10; i++) {
         if (mesas[i].estado == 'abierta' && mesas[i].nombreCamarero == nombresCamareros[3]) {
             rendimiento[3].innerHTML = (mesas[i].numero)
         }
     }
 }
 
+//Cambiar datos camareros
 function guardarCambios() {
     var placeholders_name = document.getElementsByClassName("userName");
     var placeholders_pass = document.getElementsByClassName("userPass");
     var names = [];
     var pass = [];
     let camareros = JSON.parse(localStorage.listaCamareros);
-    let arrayCamareros = Object.values (camareros);
+    let arrayCamareros = Object.values(camareros);
     console.log(arrayCamareros);
     for (let i = 0; i < placeholders_name.length; i++) {
         names.push(placeholders_name[i].value);
@@ -77,13 +80,179 @@ function guardarCambios() {
     localStorage.setItem("listaCamareros", JSON.stringify(arrayCamareros))
 }
 
+//Mesas
+function cargarMesas() {
+    borraMesas();
+    let mesas = JSON.parse(localStorage.getItem('listaMesas'));
+    for (let i = 0; i < mesas.length; i++) {
+        var divMesa = document.createElement('div');
+        divMesa.className = `a_mesas`;
+        var numero = document.createTextNode((mesas[i].numero));
+        divMesa.appendChild(numero);
+        document.querySelector('#a_mesas').appendChild(divMesa);
+    }
+};
+
+//Menus
+function cargarMenus() {
+    var menus = JSON.parse(localStorage.getItem('Menus'));
+    menus = Object.entries(menus);
+    console.log(menus);
+    const selectMenus = document.getElementById('a_select_menu');
+
+    menus.forEach(element => {
+        const option = document.createElement('option');
+        option.append(element[0]);
+        option.setAttribute('value', element[0]);
+        selectMenus.append(option);
+    });
+};
+
+function cargaMenuSeleccionado() {
+    let tabla = document.getElementById("a_tablaMenus");
+
+    const selectMenus = document.getElementById('a_select_menu');
+    const selectArticulo = document.getElementById('a_select_articulo');
+
+    var menus = JSON.parse(localStorage.getItem('Menus'));
+    menus = Object.entries(menus);
+    var articulosMenu = '';
+    var menuElegido = '';
+    const opciones = document.querySelectorAll('#a_select_menu option');
+    menuElegido = selectMenus.value;
+    //Crear tabla de Menu
+    if (menuElegido != opciones[0].value) {
+        borrarChild(tabla);
+
+        const tr = document.createElement('tr');
+        const thPrecio = document.createElement('th');
+        const thArticulo = document.createElement('th');
+        thArticulo.append('Articulos');
+        thPrecio.append('Precio');
+        tr.append(thArticulo);
+        tr.append(thPrecio);
+        tabla.append(tr);
+
+        menus.forEach(element => {
+            if (element[0] == menuElegido) {
+                const articulosMenu = (element[1].articulosMenu);
+
+                let articulos = [];
+                let precios = [];
+                for (let j = 0; j < articulosMenu.length; j++) {
+                    articulos.push(articulosMenu[j].nombre);
+                    precios.push(articulosMenu[j].precio);
+                }
+
+                for (let i = 0; i < articulos.length; i++) {
+                    var fila = document.createElement("tr");
+                    var articulo = document.createElement("td");
+                    var precio = document.createElement("td");
+
+                    articulo.innerHTML = articulos[i];
+                    articulo.setAttribute("class", "a_articulos")
+                    precio.innerHTML = precios[i];
+                    fila.append(articulo);
+                    fila.append(precio);
+                    tabla.append(fila);
+                }
+            }
+        });
+
+    }
+
+    //Cargar opciones del select de articulos
+    if (menuElegido != opciones[0].value) {
+        borrarChild(selectArticulo);
+        for (let i = 0; i < menus.length; i++) {
+            if (menuElegido == menus[i][0]) {
+                articulosMenu = menus[i][1].articulosMenu;
+                console.log(articulosMenu);
+            }
+        }
+
+        for (let i = 0; i < articulosMenu.length; i++) {
+            const option = document.createElement('option');
+            option.append(articulosMenu[i].nombre);
+            option.setAttribute('value', articulosMenu[i].nombre);
+            selectArticulo.append(option);
+        }
+    }
+    return [articulosMenu, menuElegido, menus];
+}
+
+function borrarArticulos(menuElegido) {
+    const selectArticulo = document.getElementById('a_select_articulo');
+    var articuloElegido = selectArticulo.value;
+
+    var menusLS = JSON.parse(localStorage.getItem('Menus'));
+    var mesas = JSON.parse(localStorage.getItem('listaMesas'));
+
+    var borrado = [];
+    menusLS[`${menuElegido}`].articulosMenu.filter(element => {
+        if (element.nombre != articuloElegido) {
+            borrado.push(element);
+        }
+    });
+    menusLS[`${menuElegido}`].articulosMenu = borrado;
+
+    var borradoComanda = [];
+    mesas[0].comanda.filter(element => {
+        if (element.nombre != articuloElegido) {
+            borradoComanda.push(element);
+        }
+    });
+    mesas.forEach(mesa => mesa.comanda = borradoComanda);
+
+    localStorage.setItem('Menus', JSON.stringify(menusLS));
+    localStorage.setItem('listaMesas', JSON.stringify(mesas));
+}
+
+function addArticulos(articulosMenu, menuElegido) {
+    var articulo = document.getElementsByName('articulo')[0].value;
+    var precio = document.getElementsByName('precio')[0].value;
+    precio = parseFloat(precio);
+
+    console.log(articulosMenu);
+
+    var menusLS = JSON.parse(localStorage.getItem('Menus'));
+    var mesas = JSON.parse(localStorage.getItem('listaMesas'));
+    let busqueda = false;
+    let posicion = 0;
+    for (let j = 0; j < menusLS[`${menuElegido}`].articulosMenu.length; j++) {
+        if (menusLS[`${menuElegido}`].articulosMenu[j].nombre == articulo) {
+            busqueda = true;
+            posicion = j;
+        }
+    };
+    console.log('busqueda final: ', busqueda, 'en posicion: ', posicion);
+
+    if (busqueda == false) {
+        let nuevoArticulo = {
+            'nombre': `${articulo}`,
+            'precio': `${precio}`,
+            'cantidad': 0,
+            'descripciones': []
+        }
+        console.log(nuevoArticulo);
+        menusLS[`${menuElegido}`].articulosMenu.push(nuevoArticulo);
+        mesas.forEach(mesa => mesa.comanda.push(nuevoArticulo));
+    } else {
+        menusLS[`${menuElegido}`].articulosMenu[`${posicion}`].precio = precio;
+        mesas.forEach(mesa => mesa.comanda.precio = precio);
+    }
+    console.log(menusLS);
+    localStorage.setItem('Menus', JSON.stringify(menusLS));
+    localStorage.setItem('listaMesas', JSON.stringify(mesas));
+}
+
 //---------------------------------------- GRAFICA RESULTADOS -------------------------------------------------------------------------------------
 function cargarGraficos(num) {
     // DATOS -------------
 
     var tickets = JSON.parse(bajar('ticket'))
     let camareros = JSON.parse(localStorage.listaCamareros);
-    let arrayCamareros = Object.values (camareros);
+    let arrayCamareros = Object.values(camareros);
     var total = [0]
     var total1 = [0]
     var total2 = [0]
@@ -197,22 +366,73 @@ function cargarGraficos(num) {
 
 window.addEventListener('load', () => {
     // cargarGraficos();
+    cargarMesas();
 
+    //Datos Camareros
     var a_mostrar_datos = document.querySelector('#a_mostrar_datos');
-    a_mostrar_datos.addEventListener('click', ()=>{
+    a_mostrar_datos.addEventListener('click', () => {
         mostrarDatos();
     });
 
     var a_guardar_cambios = document.querySelector('#a_guardar_cambios');
-    a_guardar_cambios.addEventListener('click', ()=>{
+    a_guardar_cambios.addEventListener('click', () => {
         guardarCambios();
     });
 
+    //Graficos
     var resultados = document.querySelectorAll('.a_resultados1');
-    resultados[1].addEventListener('click', ()=>{
+    resultados[1].addEventListener('click', () => {
         cargarGraficos(0);
     });
-    resultados[2].addEventListener('click', ()=>{
+    resultados[2].addEventListener('click', () => {
         cargarGraficos(1);
     });
+
+    //Mesas
+    const botonCrearMesa = document.getElementById('a_crear_mesa');
+    botonCrearMesa.addEventListener('click', () => {
+        let mesas = JSON.parse(localStorage.getItem('listaMesas'));
+        let nuevaMesa = new mesa(mesas.length + 1);
+        nuevaMesa.addComanda(vinoTinto, vinoBlanco, cerveza, refresco, zumo, cafe, cafeEspecial, gazpacho, ensaladaMixta, ensaladilla, lasania, pureVerduras, secretoIberico, escalopePollo, bacalaoRiojana, hamburguesa, tartaQueso, frutaTiempo, flan);
+        mesas.push(nuevaMesa);
+        localStorage.setItem('listaMesas', JSON.stringify(mesas));
+        cargarMesas();
+    });
+
+    const botonBorrarMesa = document.getElementById('a_borrar_mesa');
+    botonBorrarMesa.addEventListener('click', () => {
+        let mesas = JSON.parse(localStorage.getItem('listaMesas'));
+        if (mesas[mesas.length - 1].estado != 'abierta') {
+            mesas.pop();
+        } else {
+            alert('esta mesa se encuentra abierta actualmente, intente borrarla más tarde');
+        }
+        localStorage.setItem('listaMesas', JSON.stringify(mesas));
+        cargarMesas();
+    });
+
+    //Menus
+    cargarMenus();
+
+    const botonVerMenu = document.getElementById('a_boton_verMenu');
+    var seleccion = '';
+    botonVerMenu.addEventListener('click', () => {
+        seleccion = cargaMenuSeleccionado();
+        console.log(seleccion);
+    });
+
+
+    const botonBorrar = document.getElementById('a_botonBorrar_Articulo');
+    botonBorrar.addEventListener('click', () => {
+        console.log(seleccion);
+        borrarArticulos(seleccion[1]);
+        cargaMenuSeleccionado();
+    });
+
+    const botonAdd = document.getElementById('a_boton_addArticulo');
+    botonAdd.addEventListener('click', () => {
+        addArticulos(seleccion[0], seleccion[1]);
+        cargaMenuSeleccionado()
+    });
+
 });

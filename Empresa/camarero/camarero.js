@@ -5,7 +5,7 @@ function bajar(clave) {
     return localStorage.getItem(clave);
 }
 
-function borrarChild(parent) {
+export function borrarChild(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
@@ -13,17 +13,6 @@ function borrarChild(parent) {
 
 import { consulta_ticket } from "../../Clientes/ticket/ticket.js";
 import { Ticket } from "../../Clientes/ticket/ticket.js";
-// class Ticket {
-//     constructor(id_ticket, fecha, id_mesa, nombre_camarero, comanda, total, pagado) {
-//         this.id_ticket = id_ticket;
-//         this.fecha = fecha;
-//         this.id_mesa = id_mesa;
-//         this.nombre_camarero = nombre_camarero;
-//         this.comanda = comanda;
-//         this.total = total;
-//         this.pagado = pagado;
-//     }
-// }
 
 //Baja datos de las mesas y camarero logueado - llama a la función que carga la info
 function camareroIn() {
@@ -108,25 +97,30 @@ function enviaMesa(indice) {
     subir('mesaActual', indice);
     window.location = "../mesa/mesa.html";
 }
+
 function historial() {
-    var tickets = JSON.parse(localStorage.ticket);
-    var camareros = JSON.parse(localStorage.getItem('listaCamareros'));
+    var tickets = JSON.parse(localStorage.getItem('ticket'));
     var camareroActual = JSON.parse(localStorage.getItem("camareroActual"));
 
     for (let i = 0; i < tickets.length; i++) {
-        if (tickets[i].nombre_camarero == camareros[camareroActual].nombre) {
-            var idTicket = tickets[i].id_ticket
+        if (tickets[i].nombre_camarero == camareroActual) {
+            var idTicket = tickets[i].id_ticket;
             var botonTicket = document.createElement('button');
             botonTicket.className = `c_ticket`;
-            botonTicket.addEventListener('click', () => {
-                consulta_ticket(idTicket);
-                window.location = "../../Clientes/ticket/ticket.html"
-            })
+            botonTicket.setAttribute('data-id', idTicket);
             var id = document.createTextNode(`Fecha: ${tickets[i].fecha} | id: ${idTicket}`);
             botonTicket.appendChild(id);
             document.querySelector('#c_historial').appendChild(botonTicket);
         }
     }
+    var botonesTicket = document.querySelectorAll('.c_ticket');
+    botonesTicket.forEach(element => {
+        element.addEventListener('click', () => {
+            localStorage.setItem("ticketSeleccionado", element.dataset.id);
+            window.location = "../ticket/ticket.html"
+        })
+    });
+    
 }
 
 window.addEventListener('load', () => {

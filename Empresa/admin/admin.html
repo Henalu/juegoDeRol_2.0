@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -50,22 +51,61 @@
                 <p class="a_rendimiento"> </p>
             </div>
         </div>
-        <button id="a_mostrar_datos">Mostrar datos</button>      
-        <button id="a_guardar_cambios">Guardar cambios</button>
+        <div>
+            <button id="a_mostrar_datos">Mostrar datos</button>
+            <button id="a_guardar_cambios">Guardar cambios</button>
+        </div>
+
+        <h2>Mesas</h2>
+        <div id="a_mesas"></div>
+        <div>
+            <button id="a_crear_mesa">Crear Mesa</button>
+            <button id="a_borrar_mesa">Borrar Mesa</button>
+        </div>
+
+        <h2>Menus</h2>
+        <div id="a_menus">
+            <label for="a_select_menu"></label>
+            <select name="a_select_menu" id="a_select_menu">
+                <option value="elige">Elige un Menu:</option>
+            </select>
+            <button id="a_boton_verMenu">Ver Menu</button>
+
+            <table id="a_tablaMenus"></table>
+
+            <label for="a_select_articulo"></label>
+            <select name="a_select_articulo" id="a_select_articulo">
+                <option value="elige">Elige un articulo:</option>
+            </select>
+            <button id="a_botonBorrar_Articulo">Borrar</button>
+        </div>
+
+        <h2>Añadir o modificar articulos del Menu</h2>
+        <p>Para añadir un articulo nuevo, seleccione previamente el menu, luego introduzca un nombre y precio para dicho articulo o bien escriba el nombre de una articulo existente para modificar su precio</p>
+        <div id="a_addArticulos">
+            <label for="articulo">Articulo</label>
+            <input type="text" name="articulo" placeholder="Nombre del Artículo">
+            <label for="precio">Precio</label>
+            <input type="text" name="precio" placeholder="Precio del Artículo">
+            <button id="a_boton_addArticulo">Añadir/Modificar</button>
+        </div>
+        
+
     </div>
     <div class="a_resultados1">
-    <details>
-        <summary class= "c_style">
-            Resultados
-        </summary>
-        <button class="a_resultados1">Total/mesas</button>
-        <button class="a_resultados1">Total/importes</button>  
-    
-    </details>
-</div>
-    
+        <details>
+            <summary class="c_style">
+                Resultados
+            </summary>
+            <button class="a_resultados1">Total/mesas</button>
+            <button class="a_resultados1">Total/importes</button>
+
+        </details>
+    </div>
+
     <div id="a_resultados">
-                
+
     </div>
 </body>
+
 </html>
