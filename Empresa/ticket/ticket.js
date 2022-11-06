@@ -44,7 +44,7 @@ function imprimirTicket(id_ticket_entrada) {
         articulo.setAttribute("class", "t_articulos")
         precio.innerHTML = precios[i];
         cant.innerHTML = cantidades[i];
-        total.innerHTML = cantidades[i] * precios[i];
+        total.innerHTML = (cantidades[i] * precios[i]).toFixed(2);
         fila.appendChild(articulo);
         fila.appendChild(cant);
         fila.appendChild(precio);
