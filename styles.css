@@ -409,7 +409,8 @@ header#a_header {
 
 .a_tablaH {
     font-size: 5vw;
-    margin-bottom: 10px;
+    height: 8vw;
+    min-height: 20px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -418,7 +419,8 @@ header#a_header {
 }
 
 .a_tablaR {
-    margin-bottom: 10px;
+    height: 6vw;
+    min-height: 20px;
     font-size: 5vw;
     display: flex;
     flex-direction: row;
@@ -464,13 +466,13 @@ p.a_rendimiento {
     flex-flow: column wrap;
 }
 
-#a_contenedor_mesas h2{
+#a_contenedor_mesas h2 {
     margin: 5px;
     align-self: center;
     font-size: 6vw;
 }
 
-#a_botones_mesa{
+#a_botones_mesa {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -508,21 +510,21 @@ p.a_rendimiento {
     flex-flow: column wrap;
 }
 
-#a_contenedor_menus button{
+#a_contenedor_menus button {
     margin: 8px;
     padding: 4px;
     border-radius: 5px;
     width: fit-content;
 }
 
-#a_menus{
+#a_menus {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     justify-content: space-evenly;
 }
 
-#a_contenedor_menus h2{
+#a_contenedor_menus h2 {
     width: 100%;
     text-align: center;
     margin-top: 20px;
@@ -571,7 +573,7 @@ p.a_rendimiento {
     background-image: url(https://cdn.pixabay.com/photo/2016/11/29/09/00/doughnuts-1868573__340.jpg);
 }
 
-#a_mostrar_menu{
+#a_mostrar_menu {
     display: none;
     flex-flow: row wrap;
     justify-content: space-evenly;
@@ -604,7 +606,7 @@ p.a_rendimiento {
 }
 
 /*------------------- Editar Menus --------------------*/
-#a_edit{
+#a_edit {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -625,17 +627,18 @@ p.a_rendimiento {
     background-image: url(https://cdn.pixabay.com/photo/2019/08/11/07/11/casestte-4398267__340.png);
 }
 
-#a_edit_menu{
+#a_edit_menu {
     display: none;
     flex-flow: column wrap;
     align-items: center;
     justify-content: center;
 }
 
-#a_edit_menu button{
+#a_edit_menu button {
     font-size: 2.5vw;
 }
-#a_edit_menu select{
+
+#a_edit_menu select {
     font-size: 2.5vw;
 }
 
@@ -643,11 +646,13 @@ p.a_rendimiento {
     display: flex;
     flex-flow: column wrap;
 }
-#a_addArticulos label{
+
+#a_addArticulos label {
     margin-bottom: 3px;
     font-size: 3vw;
 }
-#a_addArticulos input{
+
+#a_addArticulos input {
     margin-bottom: 10px;
     font-size: 3vw;
 }
@@ -665,38 +670,49 @@ p.a_rendimiento {
     margin-bottom: 30px;
 }
 
-#a_tablaMenus{
+#a_tablaMenus {
     width: 50vw;
 }
 
-#a_tablaMenus th{
+#a_tablaMenus th {
     height: 6vw;
     font-size: 3.5vw;
 }
-#a_tablaMenus tr{
+
+#a_tablaMenus tr {
     height: 4vw;
     font-size: 2.5vw;
 }
-#a_tablaMenus td{
+
+#a_tablaMenus td {
     text-align: center;
 }
 
-#a_contenedor_edit_menus{
+#a_contenedor_edit_menus {
     display: flex;
     flex-flow: column wrap;
     align-items: center;
     border-top: 1px solid black;
 }
 
-#a_contenedor_edit_menus h2{
+#a_contenedor_edit_menus h2 {
     width: 100%;
     margin-bottom: 10px;
 }
-#a_contenedor_edit_menus p{
+
+#a_contenedor_edit_menus p {
     width: 80%;
     font-size: 2.5vw;
     margin-bottom: 10px;
 }
+
+/* Estadisticas */
+#a_stats {
+    margin-top: 20px;
+    display: flex;
+    flex-flow: column wrap;
+}
+
 
 
 /*----------------------------------------------------- CAMARERO -----------------------------------------------------*/
