@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Area</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="icon" type="image/x-icon" href="../../img/favicon.png">
+    <script type="module" src="admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body id="a_body">
+    <header id="a_header">
+        <div id="cl_logo"><img src="../../img/favicon.png" alt="logo"></div>
+        <h1 id="cl_nombre">RestaurApp</h1>
+    </header>
+    <hgroup id="a_subtitulo">
+        <h2 id="a_nombre">Admin Área</h2>
+        <h4><a href="../0-index/index.html">Salir</a></h4>
+    </hgroup>
+
+    <div id="a_options">
+        <div class="a_opcion a_ver_empleados">
+            <p>Empleados</p>
+        </div>
+        <div class="a_opcion a_ver_mesas">
+            <p>Mesas</p>
+        </div>
+        <div class="a_opcion a_ver_menus">
+            <p>Menus</p>
+        </div>
+        <div class="a_opcion a_ver_stats">
+            <p>Estadísticas</p>
+        </div>
+    </div>
+
+    <div id="a_gestion">
+        <button class="a_volver">Volver</button>
+        <h2>Gestión de camareros</h2>
+        <div id="a_tabla">
+            <div class="a_tablaH">
+                <p></p>
+                <p>Nombre</p>
+                <p>Password</p>
+                <p>Mesas</p>
+            </div>
+            <div class="a_tablaR">
+                <p class="a_ids">ID 1: </p>
+                <input type="text" class="userName" placeholder="">
+                <input type="text" class="userPass" placeholder="">
+                <p class="a_rendimiento"> </p>
+            </div>
+            <div class="a_tablaR">
+                <p class="a_ids">ID 2: </p>
+                <input type="text" class="userName" placeholder="">
+                <input type="text" class="userPass" placeholder="">
+                <p class="a_rendimiento"> </p>
+            </div>
+            <div class="a_tablaR">
+                <p class="a_ids">ID 3: </p>
+                <input type="text" class="userName" placeholder="">
+                <input type="text" class="userPass" placeholder="">
+                <p class="a_rendimiento"> </p>
+            </div>
+            <div class="a_tablaR">
+                <p class="a_ids">ID 4: </p>
+                <input type="text" class="userName" placeholder="">
+                <input type="text" class="userPass" placeholder="">
+                <p class="a_rendimiento"> </p>
+            </div>
+        </div>
+        <div id="a_botones_gestion_camareros">
+            <button id="a_mostrar_datos">Mostrar datos</button>
+            <button id="a_guardar_cambios">Guardar cambios</button>
+        </div>
+    </div>
+
+    <div id="a_contenedor_mesas">
+        <button class="a_volver">Volver</button>
+        <h2>Mesas</h2>
+        <div id="a_mesas"></div>
+        <div id="a_botones_mesa">
+            <button id="a_crear_mesa">Crear Mesa</button>
+            <button id="a_borrar_mesa">Borrar Mesa</button>
+        </div>
+    </div>
+
+    <div id="a_contenedor_menus">
+        <button class="a_volver">Volver</button>
+        <h2>Menus</h2>
+        <div id="a_menus">
+            <div id="bebidas" class="a_menu bebidas">
+                <p>Bebidas</p>
+            </div>
+            <div id="primeros" class="a_menu primeros">
+                <p>Primeros</p>
+            </div>
+            <div id="segundos" class="a_menu segundos">
+                <p>Segundos</p>
+            </div>
+            <div id="postres" class="a_menu postres">
+                <p>Postres</p>
+            </div>
+        </div>
+        <div id="a_mostrar_menu"></div>
+
+        <div id="a_edit">Editar Menus</div>
+
+        <div id="a_edit_menu">
+            <label for="a_select_menu"></label>
+            <select name="a_select_menu" id="a_select_menu">
+                <option value="elige">Elige un Menu:</option>
+            </select>
+            <button id="a_boton_verMenu">Ver Menu</button>
+
+            <table id="a_tablaMenus"></table>
+
+            <label for="a_select_articulo"></label>
+            <select name="a_select_articulo" id="a_select_articulo">
+                <option value="elige">Elige un articulo:</option>
+            </select>
+            <button id="a_botonBorrar_Articulo">Borrar</button>
+
+
+            <div id="a_contenedor_edit_menus">
+                <h2>Añadir o modificar articulos del Menu</h2>
+                <p>Para añadir un articulo nuevo, seleccione previamente el menu, luego introduzca un nombre y precio
+                    para
+                    dicho
+                    articulo o bien escriba el nombre de una articulo existente para modificar su precio</p>
+                <div id="a_addArticulos">
+                    <label for="articulo">Articulo</label>
+                    <input type="text" name="articulo" placeholder="Nombre del Artículo">
+                    <label for="precio">Precio</label>
+                    <input type="text" name="precio" placeholder="Precio del Artículo">
+                    <label for="Foto">Foto</label>
+                    <input type="text" name="foto" placeholder="Link o Ruta a Foto">
+                    <label for="Descripcion">Descripcion</label>
+                    <input type="text" name="descripcion" placeholder="Descripcion del Artículo">
+                    <button id="a_boton_addArticulo">Añadir/Modificar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="a_stats">
+        <button class="a_volver">Volver</button>
+        <div class="a_resultados1">
+            <details>
+                <summary class="c_style">
+                    Resultados
+                </summary>
+                <button class="a_resultados1">Total/mesas</button>
+                <button class="a_resultados1">Total/importes</button>
+
+            </details>
+        </div>
+
+        <div id="a_resultados">
+
+        </div>
+    </div>
+
+</body>
+
+</html>

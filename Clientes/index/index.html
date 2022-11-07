@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RestaurApp</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="icon" type="image/x-icon" href="../../img/favicon.png">
+    <script type="module" src="script.js"></script>
+</head>
+
+
+<body>
+    <div id="cl_contenedor_general">
+        <header id="cl_header">
+            <div id="cl_logo"><img src="../../img/favicon.png" alt="logo"></div>
+            <h1 id="cl_nombre">RestaurApp</h1>
+        </header>
+
+        <div id="cl_options">
+            <div class="cl_opcion cl_ver_menus"><p>Menus</p></div>
+            <div class="cl_opcion cl_boton_comanda"><p>Comanda</p></div>
+            <div class="cl_opcion cl_ver_ticket"><p>Ticket</p></div>
+        </div>
+
+        <div id="cl_menus">
+            <button class="cl_boton_volver">Volver</button>
+            <div class="cl_menu bebidas"><p>Bebidas</p></div>
+            <div class="cl_menu primeros"><p>Primeros</p></div>
+            <div class="cl_menu segundos"><p>Segundos</p></div>
+            <div class="cl_menu postres"><p>Postres</p></div>
+        </div>
+
+        <div id="cl_menu_bebidas" class="cl_menu_select"></div>
+        <div id="cl_menu_primeros" class="cl_menu_select"></div>
+        <div id="cl_menu_segundos" class="cl_menu_select"></div>
+        <div id="cl_menu_postres" class="cl_menu_select"></div>
+
+        <div id="cl_intro_mesa">
+            <button class="cl_boton_volver">Volver</button>
+            <label for="numeroMesa">Introduce el numero de tu mesa</label>
+            <input type="text" name="numeroMesa" placeholder="numero...">
+            <button id="cl_ver_comanda">Ver Comanda</button>
+        </div>
+
+        <div id="cl_comanda_mesa">
+            <button class="cl_boton_volver">Volver</button>
+        </div>
+
+        <div id="cl_consultar_ticket">
+            <button class="cl_boton_volver">Volver</button>
+            <p>Introduce el localizador del ticket:</p>
+            <input type="number" name="ticket" id="cl_ticket"><br>
+            <button id="cl_consultar">Consultar</button>
+        </div>
+
+    </div>
+</body>
+
+</html>

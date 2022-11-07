@@ -1,38 +1,34 @@
-
-/*
-
-Localstorage
-
-OBJETO CAMARERO 
-- id_camarero : 1 - 4
-- nombre_camarero: "fulanito"
-- password: "pass"
-- mesas actuales: {[id_mesa] , ...}
-- mesas atendidas: {["fecha": date , "id_tiket" : 04094 , "total" : €]}
-*/
-
-/* 
-menu = {
-    id: []
-    nombre:[] 
-    precio:[]
-}
-*/
-
-/*
-ticket{
-    id_ticket:'numero'
-    fecha: getdate()
-    id_mesa: 1-10 
-    nombre_camarero: ""
-    comanda:
-    total: 
-    pagado: true o false
-}
-
-IDS PARA EL HTML ==>> a_xxxx = admin.html, c_xxxx = camarero.html, m_xxxx = mesa.html 
-
-*/
+// function iniciarTicket() {
+//     var fecha = new Date;
+//     var fechaticket = fecha.getDay() + "/" + fecha.getMonth() + "/" + fecha.getFullYear() + " " + fecha.getHours() + ":" + fecha.getMinutes()
+//     var ticket = {
+//         id_ticket: 0,
+//         fecha: fechaticket,
+//         id_mesa: 0,
+//         nombre_camarero: "camarero3",
+//         comanda: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         total: 0,
+//         pagado: false,
+//     }
+//     subir("ticket", JSON.stringify(ticket))
+// }
+// function guardarTicket() {
+//     var fecha = new Date;
+//     var fechaticket = fecha.getDay() + "/" + fecha.getMonth() + "/" + fecha.getFullYear() + " " + fecha.getHours() + ":" + fecha.getMinutes();
+//     var ticketsLista = [JSON.parse(localStorage.getItem("ticket"))];
+//     var id_anterior = ticketsLista[ticketsLista.length - 1].id_ticket;
+//     var ticket = {
+//         id_ticket: id_anterior + 1,
+//         fecha: fechaticket,
+//         id_mesa: 0,
+//         nombre_camarero: "camarero3",
+//         comanda: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         total: 0,
+//         pagado: false,
+//     };
+//     ticketsLista.push(ticket);
+//     subir("ticket", JSON.stringify(ticketsLista));
+// }
 
 function subir(clave, valor) {
     localStorage.setItem(clave, valor);
@@ -41,40 +37,7 @@ function bajar(clave) {
     return localStorage.getItem(clave);
 }
 
-//
-function iniciarTicket() {
-    var fecha = new Date;
-    var fechaticket = fecha.getDay() + "/" + fecha.getMonth() + "/" + fecha.getFullYear() + " " + fecha.getHours() + ":" + fecha.getMinutes()
-    var ticket = {
-        id_ticket: 0,
-        fecha: fechaticket,
-        id_mesa: 0,
-        nombre_camarero: "camarero3",
-        comanda: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        total: 0,
-        pagado: false,
-    }
-    subir("ticket", JSON.stringify(ticket))
-}
-function guardarTicket() {
-    var fecha = new Date;
-    var fechaticket = fecha.getDay() + "/" + fecha.getMonth() + "/" + fecha.getFullYear() + " " + fecha.getHours() + ":" + fecha.getMinutes();
-    var ticketsLista = [JSON.parse(localStorage.getItem("ticket"))];
-    var id_anterior = ticketsLista[ticketsLista.length - 1].id_ticket;
-    var ticket = {
-        id_ticket: id_anterior + 1,
-        fecha: fechaticket,
-        id_mesa: 0,
-        nombre_camarero: "camarero3",
-        comanda: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        total: 0,
-        pagado: false,
-    };
-    ticketsLista.push(ticket);
-    subir("ticket", JSON.stringify(ticketsLista));
-}
-
-//Inicializamos datos basicos para el restaurante: menu, mesa y camareros
+//--------------------Inicializamos datos basicos para el restaurante: menu, mesa y camareros-----------------------
 
 function iniciar() {
     if (localStorage.length == 0) {
@@ -200,11 +163,11 @@ function cargarPago() {
     var pagado = tickets[ticketSeleccionado].pagado;
     if (pagado) {
         alert("Esta cuenta está pagada. muchas gracias");
-        window.location = "index.html"
+        window.location = "0-index.html";
     }
     var precio = tickets[ticketSeleccionado].total
     var p_total = document.getElementById("p_total")
-    p_total.innerText = precio + "€"
+    p_total.innerText = precio + "€";
 }
 
 function checkPago() {
@@ -218,7 +181,7 @@ function checkPago() {
     var pagado = tikets[ticketSeleccionado].pagado;
     if (pagado) {
         alert("Esta cuenta está pagada. muchas gracias");
-        window.location = "index.html"
+        window.location = "0-index.html";
     }
     if (!nombre.match(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u)) {
         alert("El nombre introducido no es válido.");
@@ -243,7 +206,7 @@ function checkPago() {
     if (!validationCard) { alert("El número de tarjeta introducido no es Visa o Mastercard") }
     if (validation && validationCard) {
         alert("Operación finalizada con éxito.")
-        window.location = "index.html"
+        window.location = "0-index.html";
         pagado = true;
     }
     tikets[ticketSeleccionado].pagado = pagado;
@@ -313,9 +276,6 @@ function guardarCambios() {
 
     localStorage.setItem("camarero", JSON.stringify(users))
 }
-
-
-
 
 
 //---------------------------------------- GRAFICA RESULTADOS -------------------------------------------------------------------------------------
@@ -436,6 +396,8 @@ function cargarGraficos(num) {
 
 }
 
+
+// ------------------------------------------Camarero Logueado----------------------------------------
 //Baja datos de las mesas y camarero logueado - llama a la función que carga la info
 function camareroIn() {
     var camareros = JSON.parse(bajar('camarero'));
@@ -444,7 +406,6 @@ function camareroIn() {
     document.getElementById('c_nombre').innerText = camareros[(camareroActual - 1)].nombre_camarero
     cargarMesas(camareroActual, mesas);
 }
-
 
 function borraMesas() {
     var mesasA = document.querySelector('.c_cpntainer1');
@@ -488,7 +449,15 @@ function cargarMesas(camareroActual, mesas) {
             document.getElementsByClassName("c_cpntainer3")[0].appendChild(divMesa);
         }
     }
-    historial();
+    
+    if(JSON.parse(localStorage.getItem('ticket'))!=null){
+        historial();
+    }else{
+        let historial = document.querySelector('#c_historial');
+        historial.innerHTML = 'No hay tickets'
+    }
+    
+    
 }
 
 //ENVÍA LA MESA A MESA.HTML
@@ -500,7 +469,6 @@ function checkMesa(indice, camareroActual) {
     camareroIn();
     enviaMesa(indice)
 }
-
 
 function enviaMesa(indice) {
     subir('mesaActual', indice);
