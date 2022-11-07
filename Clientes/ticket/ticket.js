@@ -1,65 +1,73 @@
-//TICKET
-
-export class Ticket{
-    constructor(id_ticket, fecha, id_mesa, nombre_camarero, comanda, total, pagado) {
-        this.id_ticket = id_ticket;
-        this.fecha = fecha;
-        this.id_mesa = id_mesa;
-        this.nombre_camarero = nombre_camarero;
-        this.comanda = comanda;
-        this.total = total;
-        this.pagado = pagado;
-    }
-};
-
 // Funcion para que el cliente pueda ver el ticket de su consumicion y pagarlo.
 
 function imprimirTicket(id_ticket_entrada) {
     let tabla = document.getElementById("t_tabla");
-    let articulos = JSON.parse(localStorage.menu).nombre;
-    let precios = JSON.parse(localStorage.menu).precio;
     let ticketsLista = JSON.parse(localStorage.ticket);
-    let ticket = ticketsLista.filter((element) => {
-        if (element.id_ticket == id_ticket_entrada) {
-            return element
-        }
-    })
+    let ticket = ticketsLista[id_ticket_entrada]
+    console.log(ticket);
 
-    let comanda = ticket[0].comanda;
-    var totalCuenta = 0;
-    for (let i = 0; i < comanda.length; i++) {
-        if (comanda[i] > 0) {
-            var fila = document.createElement("tr");
-            var articulo = document.createElement("td");
-            var precio = document.createElement("td");
-            var cant = document.createElement("td");
-            var total = document.createElement("td");
-            articulo.innerHTML = articulos[i];
-            articulo.setAttribute("class", "t_articulos")
-            precio.innerHTML = precios[i];
-            cant.innerHTML = comanda[i];
-            total.innerHTML = comanda[i] * precios[i];
-            fila.appendChild(articulo);
-            fila.appendChild(cant);
-            fila.appendChild(precio);
-            fila.appendChild(total);
-            tabla.appendChild(fila);
-            totalCuenta += (comanda[i] * precios[i]);
+    let comanda = ticket.comanda;
+    console.log(comanda);
+    let articulos = [];
+    let precios = [];
+    let cantidades = []
+    for (let j = 0; j < comanda.length; j++) {
+        if (comanda[j].cantidad > 0) {
+            articulos.push(comanda[j].nombre);
+            precios.push(comanda[j].precio);
+            cantidades.push(comanda[j].cantidad);
         }
     }
+
+    for (let i = 0; i < articulos.length; i++) {
+        var fila = document.createElement("tr");
+        var articulo = document.createElement("td");
+        var precio = document.createElement("td");
+        var cant = document.createElement("td");
+        var total = document.createElement("td");
+
+        articulo.innerHTML = articulos[i];
+        articulo.setAttribute("class", "t_articulos")
+        precio.innerHTML = precios[i];
+        cant.innerHTML = cantidades[i];
+        total.innerHTML = (cantidades[i] * precios[i]).toFixed(2);
+        fila.appendChild(articulo);
+        fila.appendChild(cant);
+        fila.appendChild(precio);
+        fila.appendChild(total);
+        tabla.appendChild(fila);
+    }
+
     var p_total = document.getElementById("t_total");
-    p_total.innerText = `${totalCuenta} €`;
+    p_total.innerText = `${(ticket.total).toFixed(2)} €`;
+
     var p_camarero = document.getElementById("t_nombreCamarero");
-    p_camarero.innerText = ticket[0].nombre_camarero;
+    p_camarero.innerText = ticket.nombre_camarero;
+
     var p_id_ticket = document.getElementById("t_id_ticket");
-    p_id_ticket.innerText = ticket[0].id_ticket;
+    p_id_ticket.innerText = ticket.id_ticket;
+
     var p_id_mesa = document.getElementById("t_id_mesa");
-    p_id_mesa.innerText = ticket[0].id_mesa + 1;
+    p_id_mesa.innerText = ticket.id_mesa;
 }
 
 function consulta_ticket(id_ticket) {
     localStorage.setItem("ticketSeleccionado", id_ticket);
-    window.location = "ticket.html";
+    // window.location = "ticket.html";
 }
 
-export {consulta_ticket};
+window.addEventListener('DOMContentLoaded', () => {
+    imprimirTicket(localStorage.ticketSeleccionado);
+
+    var botonPagar = document.getElementById('t_boton_pagar');
+    botonPagar.addEventListener('click', () => {
+        var ticketSeleccionado = localStorage.ticketSeleccionado
+        var tickets = JSON.parse(localStorage.ticket)
+        var pagado = tickets[ticketSeleccionado].pagado;
+        if (pagado) {
+            alert("Esta cuenta está pagada. muchas gracias");
+        }else{
+            window.location = '../pago/pago.html';
+        }
+    });
+});

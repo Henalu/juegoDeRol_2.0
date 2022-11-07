@@ -1,31 +1,18 @@
 // ---------------------------------------PASARELA DE PAGO -----------------------------------
 
-function cargarPago() {
-    var ticketSeleccionado = localStorage.ticketSeleccionado
-    var tickets = JSON.parse(localStorage.ticket)
-    var pagado = tickets[ticketSeleccionado].pagado;
-    if (pagado) {
-        alert("Esta cuenta está pagada. muchas gracias");
-        window.location = "0-index.html";
-    }
+function cargarPago(tickets, ticketSeleccionado) {
     var precio = tickets[ticketSeleccionado].total
     var p_total = document.getElementById("p_total")
     p_total.innerText = precio + "€";
 }
 
-function checkPago() {
+function checkPago(tickets, ticketSeleccionado) {
     var visa = document.getElementById("num_tarjeta").value;
     var regexp = /^(?:4\d([\- ])?\d{6}\1\d{5}|(?:4\d{3}|5[1-5]\d{2}|6011)([\- ])?\d{4}\2\d{4}\2\d{4})$/
     var validation = true;
     var validationCard = regexp.test(visa);
     var nombre = document.getElementById("nombre_tarjeta").value;
-    var ticketSeleccionado = localStorage.ticketSeleccionado
-    var tikets = JSON.parse(localStorage.ticket);
-    var pagado = tikets[ticketSeleccionado].pagado;
-    if (pagado) {
-        alert("Esta cuenta está pagada. muchas gracias");
-        window.location = "0-index.html";
-    }
+    var pagado = tickets[ticketSeleccionado].pagado;
     if (!nombre.match(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u)) {
         alert("El nombre introducido no es válido.");
         validation = false;
@@ -49,9 +36,20 @@ function checkPago() {
     if (!validationCard) { alert("El número de tarjeta introducido no es Visa o Mastercard") }
     if (validation && validationCard) {
         alert("Operación finalizada con éxito.")
-        window.location = "0-index.html";
+        window.location = "../index/index.html";
         pagado = true;
     }
-    tikets[ticketSeleccionado].pagado = pagado;
-    localStorage.setItem("ticket", JSON.stringify(tikets))
+    tickets[ticketSeleccionado].pagado = pagado;
+    localStorage.setItem("ticket", JSON.stringify(tickets))
 }
+
+window.addEventListener('DOMContentLoaded', ()=>{
+    var ticketSeleccionado = localStorage.ticketSeleccionado;
+    var tickets = JSON.parse(localStorage.ticket)
+    cargarPago(tickets, ticketSeleccionado);
+
+    var pagar = document.getElementById('p_pagar');
+    pagar.addEventListener('click', ()=>{
+        checkPago(tickets, ticketSeleccionado);
+    });
+});

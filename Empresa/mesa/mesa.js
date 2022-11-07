@@ -1,5 +1,5 @@
 //Importar
-import { Ticket } from "../../Clientes/ticket/ticket.js";
+import { Ticket } from "../ticket/ticket.js";
 // import { mesa } from "../0-index/index.js";
 
 function borrarChild(parent) {
@@ -231,7 +231,7 @@ function cerrarMesa(mesas, mesaActual, camareroActual) {
     window.location = '../camarero/camarero.html';
 }
 
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
     var camareroActual = JSON.parse(localStorage.getItem('camareroActual'));
     var mesas = JSON.parse(localStorage.getItem('listaMesas'));
     var mesaActual = mesas[localStorage.mesaActual];

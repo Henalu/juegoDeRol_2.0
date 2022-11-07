@@ -1,6 +1,8 @@
 /*-------------------------------- Estilos Generales -------------------------------------- */
 * {
     font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    padding: 0px;
 }
 
 a {
@@ -9,47 +11,96 @@ a {
 
 body {
     min-width: 300px;
+    min-height: 600px;
 }
 
-/* ------------------------------------------ Index --------------------------------------- */
+/* ---------------------------------------------------------- Index ------------------------------------------------------------------------ */
+#i_contenedor_general {
+    display: flex;
+    flex-flow: column wrap;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    min-width: 370px;
+}
+
 #i_header {
     display: flex;
-    justify-content: space-around;
-    background-color: rgb(0, 0, 0, 0.5);
+    width: 100%;
+    background-color: #734200;
     color: white;
     text-align: right;
     font-size: 4vw;
+    align-items: center;
+    justify-content: center;
 }
 
 h2#i_subtitulo {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 10px;
 }
 
 #i_login {
+    display: flex;
+    flex-flow: column wrap;
+    width: 35%;
+    min-width: 300px;
     margin: 30px;
-    padding-bottom: 30px;
+    padding: 10px;
     border: 2px solid black;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* ------------------------------------------ Clientes --------------------------------------- */
+#i_iniciar_sesion {
+    margin: 8px;
+    padding: 4px;
+    border-radius: 5px;
+    width: fit-content;
+}
+
+/* ------------------------------------------------------- Clientes ---------------------------------------------------------------- */
+#cl_contenedor_general {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    width: 100%;
+    min-width: 340px;
+}
+
+#cl_contenedor_general button {
+    margin: 8px;
+    padding: 4px;
+    border-radius: 5px;
+    width: fit-content;
+}
+
 #cl_header {
     display: flex;
-    justify-content: space-around;
-    background-color: rgb(0, 0, 0, 0.5);
+    width: 100%;
+    background-color: #734200;
     color: white;
     text-align: right;
     font-size: 4vw;
+    align-items: center;
+    justify-content: center;
 }
 
-div#cl_cliente h2 {
+#cl_logo {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    background-color: white;
+    clip-path: circle(50% at 50% 50%);
+    height: 100px;
+    width: 100px;
+}
+
+#cl_logo img {
+    width: 80px;
 }
 
 #cl_cliente {
@@ -58,40 +109,298 @@ div#cl_cliente h2 {
     align-items: center;
 }
 
-#cl_login {
-    margin: 30px;
-    padding-bottom: 30px;
-    border: 2px solid black;
-    position: relative;
-    top: 200px;
+/*--------------------------------- Opciones ------------------------------*/
+#cl_options {
     display: flex;
-    flex-direction: column;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.cl_opcion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40vw;
+    height: 40vw;
+    min-height: 150px;
+    min-width: 150px;
+    max-height: 330px;
+    max-width: 330px;
+    margin: 20px;
+    background-position: center;
+    clip-path: circle(50% at 50% 50%);
+    color: #F7AD05;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.cl_opcion p {
+    padding: 5px;
+    background-color: rgba(128, 128, 128, 0.74);
+    border-radius: 5px;
+}
+
+.cl_ver_menus {
+    background-image: url(https://cdn.pixabay.com/photo/2015/11/19/10/38/food-1050813_960_720.jpg);
+}
+
+.cl_boton_comanda {
+    background-image: url(https://cdn.pixabay.com/photo/2015/01/16/15/02/eating-601581_960_720.jpg);
+}
+
+.cl_ver_ticket {
+    background-image: url(https://cdn.pixabay.com/photo/2017/11/24/10/43/ticket-2974645_960_720.jpg);
+}
+
+#cl_consultar_ticket {
+    display: flex;
+    flex-flow: column wrap;
     align-items: center;
 }
 
-/* ------------------------------------------------ ADMIN AREA ------------------------------------------------ */
+/*----------------------------- Menus desplegables -------------------------*/
+#cl_menus {
+    display: none;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.cl_boton_volver {
+    display: block;
+    position: fixed;
+    top: 1%;
+    right: 1%;
+}
+
+.cl_volver_a_lista_menus {
+    display: block;
+    position: fixed;
+    top: 1%;
+    right: 1%;
+}
+
+#cl_menus .cl_menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30vw;
+    height: 30vw;
+    min-height: 100px;
+    min-width: 100px;
+    max-height: 330px;
+    max-width: 330px;
+    margin: 20px;
+    background-position: center;
+    clip-path: circle(50% at 50% 50%);
+    color: #F7AD05;
+    font-weight: bold;
+    font-size: 4vw;
+}
+
+#cl_menus .cl_menu p {
+    padding: 5px;
+    background-color: rgba(128, 128, 128, 0.74);
+    border-radius: 5px;
+}
+
+#cl_menus .bebidas {
+    background-image: url(https://cdn.pixabay.com/photo/2017/08/03/21/48/drinks-2578446__340.jpg);
+}
+
+#cl_menus .primeros {
+    background-image: url(https://cdn.pixabay.com/photo/2017/08/25/14/15/ketering-2680316__340.jpg);
+}
+
+#cl_menus .segundos {
+    background-image: url(https://cdn.pixabay.com/photo/2014/05/05/19/52/charcuterie-338498__340.jpg);
+}
+
+#cl_menus .postres {
+    background-image: url(https://cdn.pixabay.com/photo/2016/11/29/09/00/doughnuts-1868573__340.jpg);
+}
+
+.cl_menu_select {
+    display: none;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    width: 100%;
+    font-weight: bold;
+}
+
+.cl_menu_select h2 {
+    width: 100%;
+}
+
+.cl_articulo_menu {
+    display: flex;
+    flex-flow: column wrap;
+    margin: 20px;
+}
+
+.cl_articulo_menu p {
+    align-self: center;
+    width: 90%;
+    margin-top: 5px;
+    color: #F7AD05;
+}
+
+.cl_foto_articulo {
+    width: 200px;
+}
+
+/*-------------------------------- comanda -------------------------------*/
+#cl_intro_mesa {
+    display: none;
+    flex-flow: column wrap;
+    margin: 20px;
+}
+
+#cl_comanda_mesa {
+    display: none;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    width: 90%;
+}
+
+.cl_articulo_menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.cl_articulo_menu p {
+    display: flex;
+    width: 90%;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* ticket */
+#cl_consultar_ticket {
+    display: none;
+    flex-flow: column wrap;
+}
+
+/* ------------------------------------------------------- ADMIN AREA ------------------------------------------------------------- */
+#a_body {
+    display: flex;
+    flex-flow: column wrap;
+    min-width: 370px;
+    min-height: 900px;
+}
+
 header#a_header {
     display: flex;
+    width: 100%;
+    background-color: #734200;
+    color: white;
+    text-align: right;
+    font-size: 4vw;
+    align-items: center;
+    justify-content: center;
+}
+
+#a_subtitulo {
+    display: flex;
     justify-content: space-around;
-    background-color: rgb(0, 0, 0, 0.5);
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.642);
     color: white;
     text-align: right;
     font-size: 4vw;
 }
 
-#a_gestion {
-    text-align: center;
-    margin-left: 0;
-    margin-bottom: 50px;
+#a_subtitulo a {
+    color: white;
+}
+
+.a_volver {
+    display: block;
+    position: fixed;
+    top: 1%;
+    right: 1%;
+    padding: 4px;
+    border-radius: 5px;
+    width: fit-content;
+}
+
+/*---------------------------------- Opciones -----------------------------*/
+#a_options {
     display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.a_opcion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40vw;
+    height: 40vw;
+    min-height: 170px;
+    min-width: 170px;
+    max-height: 330px;
+    max-width: 330px;
+    margin: 20px;
+    background-position: center;
+    clip-path: circle(50% at 50% 50%);
+    color: #F7AD05;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.a_opcion p {
+    padding: 5px;
+    background-color: rgba(128, 128, 128, 0.74);
+    border-radius: 5px;
+}
+
+.a_ver_empleados {
+    background-image: url(https://cdn.pixabay.com/photo/2017/09/07/08/35/human-resources-2724192__340.png);
+}
+
+.a_ver_mesas {
+    background-image: url(https://cdn.pixabay.com/photo/2015/06/30/18/36/st-826688__340.jpg);
+}
+
+.a_ver_menus {
+    background-image: url(https://cdn.pixabay.com/photo/2015/11/19/10/38/food-1050813_960_720.jpg);
+}
+
+.a_ver_stats {
+    background-image: url(https://cdn.pixabay.com/photo/2018/05/09/22/40/career-3386334__340.jpg);
+}
+
+/*----------------------- Contenedor Gestion Camareros ---------------------*/
+#a_gestion {
+    display: none;
     flex-flow: column wrap;
 }
 
 #a_gestion h2 {
-    margin: 5px 0px
+    margin: 5px;
+    align-self: center;
+    font-size: 6vw;
+}
+
+#a_botones_gestion_camareros {
+    width: 90%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+#a_gestion button {
+    margin: 8px;
+    padding: 4px;
+    border-radius: 5px;
+    width: fit-content;
 }
 
 #a_tabla {
+    min-width: 340px;
     padding: 0 20px;
     justify-content: center;
     display: flex;
@@ -99,8 +408,8 @@ header#a_header {
 }
 
 .a_tablaH {
-    height: 12vw;
-    font-size: 3.8vw;
+    font-size: 5vw;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -109,8 +418,8 @@ header#a_header {
 }
 
 .a_tablaR {
-    height: 12vw;
-    font-size: 3.8vw;
+    margin-bottom: 10px;
+    font-size: 5vw;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -118,6 +427,7 @@ header#a_header {
 
 .a_ids {
     font-size: 3vw;
+    font-weight: bold;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -146,18 +456,31 @@ p.a_rendimiento {
     margin: 0 5px;
     width: 30%;
     height: 30px;
-    ;
 }
 
-#a_resultados {
-    margin-left: 20px;
-    margin-bottom: 30px;
+/*-------------------------------- Mesas ---------------------------*/
+#a_contenedor_mesas {
+    display: none;
+    flex-flow: column wrap;
 }
 
-#a_gestion button {
-    font-size: 4.3vw;
-    margin: 30px 20px;
-    width: 26vw;
+#a_contenedor_mesas h2{
+    margin: 5px;
+    align-self: center;
+    font-size: 6vw;
+}
+
+#a_botones_mesa{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#a_botones_mesa button {
+    margin: 8px;
+    padding: 4px;
+    border-radius: 5px;
+    width: fit-content;
 }
 
 #a_mesas {
@@ -173,15 +496,210 @@ p.a_rendimiento {
     justify-content: center;
     align-items: center;
     background-color: gray;
-    width: 40px;
-    height: 40px;
+    width: 10vw;
+    height: 10vw;
     color: white;
     margin: 5px;
 }
 
+/*------------------------- Menus ------------------------ */
+#a_contenedor_menus {
+    display: none;
+    flex-flow: column wrap;
+}
+
+#a_contenedor_menus button{
+    margin: 8px;
+    padding: 4px;
+    border-radius: 5px;
+    width: fit-content;
+}
+
+#a_menus{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#a_contenedor_menus h2{
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 5vw;
+}
+
+#a_menus .a_menu {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    width: 30vw;
+    height: 30vw;
+    min-height: 100px;
+    min-width: 100px;
+    max-height: 330px;
+    max-width: 330px;
+    margin: 20px;
+    background-position: center;
+    clip-path: circle(50% at 50% 50%);
+    color: #F7AD05;
+    font-weight: bold;
+    font-size: 4vw;
+}
+
+#a_menus .a_menu p {
+    padding: 5px;
+    background-color: rgba(128, 128, 128, 0.74);
+    border-radius: 5px;
+}
+
+#a_menus .bebidas {
+    background-image: url(https://cdn.pixabay.com/photo/2017/08/03/21/48/drinks-2578446__340.jpg);
+}
+
+#a_menus .primeros {
+    background-image: url(https://cdn.pixabay.com/photo/2017/08/25/14/15/ketering-2680316__340.jpg);
+}
+
+#a_menus .segundos {
+    background-image: url(https://cdn.pixabay.com/photo/2014/05/05/19/52/charcuterie-338498__340.jpg);
+}
+
+#a_menus .postres {
+    background-image: url(https://cdn.pixabay.com/photo/2016/11/29/09/00/doughnuts-1868573__340.jpg);
+}
+
+#a_mostrar_menu{
+    display: none;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    width: 100%;
+    font-weight: bold;
+}
+
+#a_mostrar_menu h2 {
+    width: 100%;
+    text-align: center;
+}
+
+.a_articulo_menu {
+    display: flex;
+    flex-flow: column wrap;
+    margin: 20px;
+}
+
+.a_articulo_menu p {
+    display: flex;
+    justify-content: space-between;
+    align-self: center;
+    width: 90%;
+    margin-top: 5px;
+    color: #F7AD05;
+}
+
+.a_foto_articulo {
+    width: 200px;
+}
+
+/*------------------- Editar Menus --------------------*/
+#a_edit{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    width: 30vw;
+    height: 30vw;
+    min-height: 100px;
+    min-width: 100px;
+    max-height: 330px;
+    max-width: 330px;
+    margin: 20px;
+    background-position: center;
+    clip-path: circle(50% at 50% 50%);
+    color: #F7AD05;
+    font-weight: bold;
+    font-size: 4vw;
+    background-image: url(https://cdn.pixabay.com/photo/2019/08/11/07/11/casestte-4398267__340.png);
+}
+
+#a_edit_menu{
+    display: none;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+#a_edit_menu button{
+    font-size: 2.5vw;
+}
+#a_edit_menu select{
+    font-size: 2.5vw;
+}
+
+#a_addArticulos {
+    display: flex;
+    flex-flow: column wrap;
+}
+#a_addArticulos label{
+    margin-bottom: 3px;
+    font-size: 3vw;
+}
+#a_addArticulos input{
+    margin-bottom: 10px;
+    font-size: 3vw;
+}
+
+#a_boton_addArticulo {
+    width: 100px;
+}
+
+#a_stats {
+    display: none;
+}
+
+#a_resultados {
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+
+#a_tablaMenus{
+    width: 50vw;
+}
+
+#a_tablaMenus th{
+    height: 6vw;
+    font-size: 3.5vw;
+}
+#a_tablaMenus tr{
+    height: 4vw;
+    font-size: 2.5vw;
+}
+#a_tablaMenus td{
+    text-align: center;
+}
+
+#a_contenedor_edit_menus{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    border-top: 1px solid black;
+}
+
+#a_contenedor_edit_menus h2{
+    width: 100%;
+    margin-bottom: 10px;
+}
+#a_contenedor_edit_menus p{
+    width: 80%;
+    font-size: 2.5vw;
+    margin-bottom: 10px;
+}
 
 
-/*-------------------------------------------------- CAMARERO -------------------------------------------------*/
+/*----------------------------------------------------- CAMARERO -----------------------------------------------------*/
 .c_cpntainer1,
 .c_cpntainer2,
 .c_cpntainer3 {
@@ -331,7 +849,7 @@ div#m_comanda .articuloComanda {
     border: 1px solid black;
 }
 
-div#m_botones_comanda{
+div#m_botones_comanda {
     display: flex;
 }
 
@@ -341,7 +859,7 @@ button#m_editar {
     border-radius: 5px;
 }
 
-button#m_guardar_edit{
+button#m_guardar_edit {
     display: none;
     margin: 8px;
     padding: 4px;
@@ -442,7 +960,7 @@ ul.m_desplegables {
 #t_header {
     display: flex;
     justify-content: space-around;
-    background-color: rgb(0, 0, 0, 0.5);
+    background-color: #734200;
     color: white;
     text-align: right;
     font-size: 4vw;

@@ -44,16 +44,16 @@ function mostrarDatos() {
 
     for (let i = 0; i < mesas.length; i++) {
         if (mesas[i].estado == 'abierta' && mesas[i].nombreCamarero == nombresCamareros[0]) {
-            rendimiento[0].innerHTML = (mesas[i].numero)
+            rendimiento[0].innerHTML += `${(mesas[i].numero)}, `
         }
         if (mesas[i].estado == 'abierta' && mesas[i].nombreCamarero == nombresCamareros[1]) {
-            rendimiento[1].innerHTML = (mesas[i].numero)
+            rendimiento[1].innerHTML += `${(mesas[i].numero)}, `
         }
         if (mesas[i].estado == 'abierta' && mesas[i].nombreCamarero == nombresCamareros[2]) {
-            rendimiento[2].innerHTML = (mesas[i].numero)
+            rendimiento[2].innerHTML += `${(mesas[i].numero)}, `
         }
         if (mesas[i].estado == 'abierta' && mesas[i].nombreCamarero == nombresCamareros[3]) {
-            rendimiento[3].innerHTML = (mesas[i].numero)
+            rendimiento[3].innerHTML += `${(mesas[i].numero)}, `
         }
     }
 }
@@ -107,6 +107,45 @@ function cargarMenus() {
         selectMenus.append(option);
     });
 };
+
+function pintarMenu(listaMenus, menuSeleccionado) {
+    let mostrarMenu = document.getElementById('a_mostrar_menu');
+    mostrarMenu.style.display = 'flex';
+    borrarChild(mostrarMenu);
+
+    let articulosMenu = listaMenus[`${menuSeleccionado}`].articulosMenu;
+    let h2 = document.createElement('h2');
+    h2.append(menuSeleccionado.toUpperCase());
+    mostrarMenu.append(h2);
+
+    articulosMenu.forEach(element => {
+        let div = document.createElement('div');
+        div.setAttribute('class', 'a_articulo_menu');
+        let img = document.createElement('img');
+        img.setAttribute('class', 'a_foto_articulo');
+        let spanNombre = document.createElement('span');
+        let spanPrecio = document.createElement('span');
+        let p = document.createElement('p');
+        spanNombre.append(element.nombre);
+        spanPrecio.append(element.precio.toFixed(2) + '€');
+        p.append(spanNombre);
+        p.append(spanPrecio);
+
+        if (element.foto == undefined) {
+            element.foto = 'https://cdn.pixabay.com/photo/2017/09/22/19/05/casserole-dish-2776735_960_720.jpg';
+            img.setAttribute('src', `${element.foto}`);
+        } else {
+            img.setAttribute('src', `${element.foto}`);
+        }
+
+        div.append(img);
+        div.append(p);
+        if (element.descripcion != undefined) {
+            div.append(element.descripcion);
+        }
+        mostrarMenu.append(div);
+    });
+}
 
 function cargaMenuSeleccionado() {
     let tabla = document.getElementById("a_tablaMenus");
@@ -212,6 +251,12 @@ function addArticulos(articulosMenu, menuElegido) {
     var articulo = document.getElementsByName('articulo')[0].value;
     var precio = document.getElementsByName('precio')[0].value;
     precio = parseFloat(precio);
+    console.log(precio);
+    var foto = document.getElementsByName('foto')[0].value;
+    if (foto == '') {
+        foto = undefined;
+    }
+    var descripcion = document.getElementsByName('descripcion')[0].value;
 
     console.log(articulosMenu);
 
@@ -230,9 +275,10 @@ function addArticulos(articulosMenu, menuElegido) {
     if (busqueda == false) {
         let nuevoArticulo = {
             'nombre': `${articulo}`,
-            'precio': `${precio}`,
+            'precio': precio,
+            'foto': foto,
             'cantidad': 0,
-            'descripciones': []
+            'descripciones': `${descripcion}`
         }
         console.log(nuevoArticulo);
         menusLS[`${menuElegido}`].articulosMenu.push(nuevoArticulo);
@@ -364,9 +410,61 @@ function cargarGraficos(num) {
 
 }
 
-window.addEventListener('load', () => {
-    // cargarGraficos();
+window.addEventListener('DOMContentLoaded', () => {
+    var options = document.getElementById('a_options');
+    var gestion = document.getElementById('a_gestion');
+    var contenedorMesas = document.getElementById('a_contenedor_mesas');
+    var contenedorMenus = document.getElementById('a_contenedor_menus');
+    var stats = document.getElementById('a_stats');
+
+    var verEmpleados = document.querySelector('.a_ver_empleados');
+    var verMesas = document.querySelector('.a_ver_mesas');
+    var verMenus = document.querySelector('.a_ver_menus');
+    var verStats = document.querySelector('.a_ver_stats');
+
+    verEmpleados.addEventListener('click', () => {
+        options.style.display = 'none';
+        gestion.style.display = 'flex';
+    });
+    verMesas.addEventListener('click', () => {
+        options.style.display = 'none';
+        contenedorMesas.style.display = 'flex';
+    });
+    verMenus.addEventListener('click', () => {
+        options.style.display = 'none';
+        contenedorMenus.style.display = 'flex';
+
+        let menus = document.getElementById('a_menus');
+        menus.style.display = 'flex';
+
+        const edit = document.getElementById('a_edit');
+        edit.style.display = 'flex';
+    });
+    verStats.addEventListener('click', () => {
+        options.style.display = 'none';
+        stats.style.display = 'flex';
+    });
+
     cargarMesas();
+
+    //Boton Volver
+    var volver = document.querySelectorAll('.a_volver');
+    volver.forEach(element => {
+        element.addEventListener('click', (() => {
+            options.style.display = 'flex';
+            gestion.style.display = 'none';
+            contenedorMesas.style.display = 'none';
+            contenedorMenus.style.display = 'none';
+            stats.style.display = 'none';
+
+            let mostrarMenu = document.getElementById('a_mostrar_menu');
+            mostrarMenu.style.display = 'none';
+            borrarChild(mostrarMenu);
+
+            var editMenu = document.getElementById('a_edit_menu');
+            editMenu.style.display = 'none';
+        }));
+    });
 
     //Datos Camareros
     var a_mostrar_datos = document.querySelector('#a_mostrar_datos');
@@ -411,8 +509,52 @@ window.addEventListener('load', () => {
         cargarMesas();
     });
 
-    //Menus
+    //Ver Menus
     cargarMenus();
+
+    var listaMenus = JSON.parse(localStorage.getItem('Menus'));
+    var menu = document.querySelectorAll('.a_menu');
+    menu.forEach(element => {
+        element.addEventListener('click', () => {
+            let menus = document.getElementById('a_menus');
+            menus.style.display = 'none';
+            var menuSeleccionado = element.getAttribute('id');
+            pintarMenu(listaMenus, menuSeleccionado);
+
+            var menush2 = document.querySelector('#a_contenedor_menus h2');
+            menush2.innerHTML = 'Volver a Menus';
+            menush2.addEventListener('click', () => {
+                let menus = document.getElementById('a_menus');
+                menus.style.display = 'flex';
+                let mostrarMenu = document.getElementById('a_mostrar_menu');
+                mostrarMenu.style.display = 'flex';
+                borrarChild(mostrarMenu);
+
+                menush2.innerHTML = 'Menus';
+            });
+        });
+    });
+
+    //Edit Menus
+    const edit = document.getElementById('a_edit');
+    edit.addEventListener('click', () => {
+        let menus = document.getElementById('a_menus');
+        menus.style.display = 'none';
+        edit.style.display = 'none';
+
+        var editMenu = document.getElementById('a_edit_menu');
+        editMenu.style.display = 'flex';
+
+        var menush2 = document.querySelector('#a_contenedor_menus h2');
+        menush2.innerHTML = 'Volver a Menus';
+        menush2.addEventListener('click', () => {
+            menus.style.display = 'flex';
+            edit.style.display = 'flex';
+            editMenu.style.display = 'none';
+
+            menush2.innerHTML = 'Menus';
+        });
+    });
 
     const botonVerMenu = document.getElementById('a_boton_verMenu');
     var seleccion = '';
@@ -420,7 +562,6 @@ window.addEventListener('load', () => {
         seleccion = cargaMenuSeleccionado();
         console.log(seleccion);
     });
-
 
     const botonBorrar = document.getElementById('a_botonBorrar_Articulo');
     botonBorrar.addEventListener('click', () => {

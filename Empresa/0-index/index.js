@@ -61,9 +61,10 @@ export class mesa {
 }
 
 export class articulo {
-    constructor(nombre, precio) {
+    constructor(nombre, precio, foto) {
         this.nombre = nombre;
         this.precio = precio;
+        this.foto = foto;
 
         this.cantidad = 0;
         this.descripciones = [];
@@ -72,6 +73,12 @@ export class articulo {
         this.descripciones.push(descripcion);
     }
     borrarDescripcion(descripcion) {
+        this.descripciones.pop(descripcion);
+    }
+    addFoto(descripcion) {
+        this.descripciones.push(descripcion);
+    }
+    borrarFoto(descripcion) {
         this.descripciones.pop(descripcion);
     }
 }
@@ -91,29 +98,29 @@ export class menu {
 }
 
 //Articulos Menu
-export const vinoTinto = new articulo('Vino tinto', 1.50);
-export const vinoBlanco = new articulo('Vino blanco', 1.50);
-export const cerveza = new articulo('cerveza', 1.50);
-export const refresco = new articulo('refresco', 1.50);
-export const zumo = new articulo('zumo', 1.50);
+export const vinoTinto = new articulo('Vino tinto', 1.50, 'https://cdn.pixabay.com/photo/2017/06/26/12/49/red-wine-2443699_960_720.jpg');
+export const vinoBlanco = new articulo('Vino blanco', 1.50, 'https://cdn.pixabay.com/photo/2017/09/26/16/44/wine-2789265_960_720.jpg');
+export const cerveza = new articulo('cerveza', 1.50, 'https://cdn.pixabay.com/photo/2017/06/24/23/41/beer-2439237__340.jpg');
+export const refresco = new articulo('refresco', 1.50, 'https://cdn.pixabay.com/photo/2014/09/26/19/51/drink-462776__340.jpg');
+export const zumo = new articulo('zumo', 1.50, 'https://cdn.pixabay.com/photo/2017/03/04/21/28/orange-juice-2117019__340.jpg');
 
-export const cafe = new articulo('cafe', 1);
-export const cafeEspecial = new articulo('cafe Especial', 1.5);
+export const cafe = new articulo('cafe', 1, 'https://cdn.pixabay.com/photo/2013/08/11/19/46/coffee-171653__340.jpg');
+export const cafeEspecial = new articulo('cafe Especial', 1.5, 'https://cdn.pixabay.com/photo/2017/09/04/18/39/coffee-2714970__340.jpg');
 
-export const gazpacho = new articulo('gazpacho', 5.2);
-export const ensaladaMixta = new articulo('ensalada Mixta', 4.5);
-export const ensaladilla = new articulo('ensaladilla', 5.5);
-export const lasania = new articulo('lasaña', 6.3);
-export const pureVerduras = new articulo('pure de verduras', 5.6);
+export const gazpacho = new articulo('gazpacho', 5.2, 'https://cdn.pixabay.com/photo/2017/05/05/19/06/tomato-soup-2288056__340.jpg');
+export const ensaladaMixta = new articulo('ensalada Mixta', 4.5, 'https://cdn.pixabay.com/photo/2016/09/15/19/24/salad-1672505__340.jpg');
+export const ensaladilla = new articulo('ensaladilla', 5.5, 'https://cdn.pixabay.com/photo/2018/08/10/15/11/eggs-3597043__340.jpg');
+export const lasania = new articulo('lasaña', 6.3, 'https://cdn.pixabay.com/photo/2015/05/03/18/35/lasagna-751504__340.jpg');
+export const pureVerduras = new articulo('pure de verduras', 5.6, 'https://cdn.pixabay.com/photo/2015/05/04/10/16/vegetables-752153__340.jpg');
 
-export const secretoIberico = new articulo('secreto iberico', 10.5);
-export const escalopePollo = new articulo('escalope pollo', 9.5);
-export const bacalaoRiojana = new articulo('bacalao riojana', 12.5);
-export const hamburguesa = new articulo('hamburguesa', 8.9);
+export const secretoIberico = new articulo('secreto iberico', 10.5, 'https://cdn.pixabay.com/photo/2016/01/22/02/13/meat-1155132__340.jpg');
+export const escalopePollo = new articulo('pollo en salsa', 9.5, 'https://cdn.pixabay.com/photo/2019/07/17/08/21/chicken-4343402__340.jpg');
+export const bacalaoRiojana = new articulo('salmon', 12.5, 'https://cdn.pixabay.com/photo/2016/03/05/19/02/salmon-1238248__340.jpg');
+export const hamburguesa = new articulo('hamburguesa', 8.9, 'https://cdn.pixabay.com/photo/2016/03/26/23/19/hamburger-1281855__340.jpg');
 
-export const tartaQueso = new articulo('tarta de queso', 2.99);
-export const frutaTiempo = new articulo('fruta del tiempo', 1.6);
-export const flan = new articulo('Flan', 3.99);
+export const tartaQueso = new articulo('tarta de queso', 2.99, 'https://cdn.pixabay.com/photo/2018/07/22/18/26/cake-3555186__340.jpg');
+export const frutaTiempo = new articulo('fruta del tiempo', 1.6, 'https://cdn.pixabay.com/photo/2017/05/11/19/44/fresh-fruits-2305192__340.jpg');
+export const flan = new articulo('Flan', 3.99, 'https://cdn.pixabay.com/photo/2017/01/06/17/18/caramel-1958358_960_720.jpg');
 
 //Funcion logIn de camareros y admin
 function iniciarSesion() {
@@ -140,9 +147,9 @@ function iniciarSesion() {
 
         for (let i = 0; i < arrayCamareros.length; i++) {
             if (loginUser == arrayCamareros[i] && loginPass == arrayPasswords[i]) {
-                window.location = "../camarero/camarero.html";
                 localStorage.setItem("camareroActual", JSON.stringify(arrayCamareros[i]));
                 login = true;
+                window.location = "../camarero/camarero.html";
             }
         }
         if (!login) {
@@ -151,7 +158,7 @@ function iniciarSesion() {
     }
 }
 
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
     if (localStorage.camareroActual) {
         localStorage.setItem("camareroActual", 0);
     }

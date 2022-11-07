@@ -1,5 +1,3 @@
-//TICKET
-
 export class Ticket {
     constructor(id_ticket, fecha, id_mesa, nombre_camarero, comanda, total, pagado) {
         this.id_ticket = id_ticket;
@@ -72,6 +70,6 @@ function consulta_ticket(id_ticket) {
 
 export { consulta_ticket };
 
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded ', () => {
     imprimirTicket(localStorage.ticketSeleccionado);
 });

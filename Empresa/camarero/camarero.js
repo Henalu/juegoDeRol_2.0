@@ -1,18 +1,12 @@
 function subir(clave, valor) {
     localStorage.setItem(clave, valor);
 }
-function bajar(clave) {
-    return localStorage.getItem(clave);
-}
 
 export function borrarChild(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
 }
-
-import { consulta_ticket } from "../../Clientes/ticket/ticket.js";
-import { Ticket } from "../../Clientes/ticket/ticket.js";
 
 //Baja datos de las mesas y camarero logueado - llama a la función que carga la info
 function camareroIn() {
@@ -21,6 +15,8 @@ function camareroIn() {
     var camareroActual = JSON.parse(localStorage.getItem('camareroActual'));
     var mesas = JSON.parse(localStorage.listaMesas);
     document.getElementById('c_nombre').innerHTML = camareroActual.toUpperCase();
+    
+
     cargarMesas(camareroActual, mesas);
 }
 
@@ -120,9 +116,9 @@ function historial() {
             window.location = "../ticket/ticket.html"
         })
     });
-    
+
 }
 
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
     camareroIn();
 });
